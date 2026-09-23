@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!--
+시안 B · 도면 시트형 문서 (토목 엔지니어 + 도면 AI 회사라는 맥락을 형식으로 옮김)
+Design read: 엔지니어링 문서처럼 읽히는 포트폴리오. IBM Carbon 계열 직각 + 모노 수치. Dials VARIANCE 5 / MOTION 3 / DENSITY 5.
+레퍼런스 실측: lynnandtonic.com(점선 리더 목차 + 로마 숫자), frankchimero.com(2열 인덱스, Courier 13px),
+  anthonyhobday.com(라벨 + 우측 수치 열, ui-monospace 16/24), jhey.dev(모노 라벨), ibm(awesome-design-html: ink #161616,
+  #525252, surface #f4f4f4, primary #0f62fe, 모서리 0)
+21st.dev Magic: Table of Contents(18113) 활성 항목을 따라 움직이는 테두리 표시 -> 스크롤 관찰 + transform 으로 이식
+표제란(도면번호·프로젝트·작성일·작성자)은 장식이 아니라 각 장의 메타데이터를 담는 표다. 배경 격자선은 쓰지 않는다. 라이트 단일(종이 도면 은유).
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이승빈 포트폴리오 · 시안 B</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23171717%27/%3E%3Cpath d=%27M9 22V10h3v9.5h7V22z%27 fill=%27%23fff%27/%3E%3C/svg%3E"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#f4f4f4">
+<meta name="description" content="이승빈 포트폴리오 시안 B">
+<style>
+:root{--bg:#f4f4f4;--card:#ffffff;--ink:#161616;--body:#393939;--mute:#6f6f6f;--hair:#e0e0e0;--line:#161616;--accent:#0f62fe;
+  --r:0px;--gap:12px;--ease:cubic-bezier(.2,0,.38,.9);--shot-shadow:0 0 0 1px #c6c6c6;--mono:"IBM Plex Mono",ui-monospace,monospace;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--body);font-family:"IBM Plex Sans KR","Pretendard Variable",system-ui,sans-serif;font-size:16px;line-height:1.7;word-break:keep-all}
+a{color:inherit}
+.frame{max-width:1360px;margin:0 auto;padding:40px 32px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:40px}
+.toc{position:sticky;top:40px;align-self:start;font-size:13.5px}
+.toc .lbl{font-family:var(--mono);font-size:12px;color:var(--mute);margin:0 0 10px}
+.toc ol{list-style:none;margin:0;padding:0;position:relative;border-left:1px solid var(--hair)}
+.toc .mk{position:absolute;left:-1px;top:0;width:2px;height:34px;background:var(--accent);transition:transform .25s var(--ease)}
+.toc a{display:grid;grid-template-columns:44px 1fr;gap:6px;padding:7px 0 7px 14px;text-decoration:none;color:var(--mute);min-height:34px}
+.toc a .n{font-family:var(--mono)}.toc a:hover,.toc a.on{color:var(--ink)}
+.toc a.btn{margin-top:24px;display:inline-flex;grid-template-columns:none;padding:0 16px;color:#fff;min-height:48px}.toc a.btn:hover{color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;height:48px;padding:0 16px;background:var(--accent);color:#fff;
+  text-decoration:none;font-size:14px;white-space:nowrap;transition:background-color .15s}
+.btn:hover{background:#0043ce}.btn:active{background:#002d9c}
+.sheet{background:var(--card);border:1px solid var(--line);margin:0 0 32px;scroll-margin-top:40px}
+.sheet .in{padding:40px 40px 32px}
+.no{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.sheet h2{margin:8px 0 0;color:var(--ink);font-size:clamp(26px,2.6vw,34px);line-height:1.3;letter-spacing:-.02em;font-weight:600}
+.desc{margin:16px 0 0;max-width:42em;font-size:16.5px}
+.tb{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid var(--line)}
+.tb div{padding:10px 14px;border-left:1px solid var(--line);min-width:0}.tb div:first-child{border-left:0}
+.tb dt{font-family:var(--mono);font-size:11.5px;color:var(--mute)}.tb dd{margin:2px 0 0;color:var(--ink);font-size:13.5px;font-weight:500;overflow-wrap:anywhere}
+.tb .wide{grid-column:span 2}
+.cover .in{padding:56px 40px 40px}
+.cover h1{margin:0;color:var(--ink);font-size:clamp(48px,6vw,80px);line-height:1;letter-spacing:-.04em;font-weight:600}
+.cover .role{margin:14px 0 0;color:var(--ink);font-size:19px}
+.cover .intro{margin:14px 0 0;max-width:36em}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);margin-top:36px;border:1px solid var(--line)}
+.nums div{padding:16px 18px}.nums div+div{border-left:1px solid var(--line)}
+.nums b{display:block;font-family:var(--mono);font-weight:500;font-size:32px;color:var(--ink);letter-spacing:-.02em;line-height:1.2}
+.nums span{font-size:13px;color:var(--mute)}
+.dl{margin:40px 0 0}
+.dl h3{margin:0 0 8px;font-family:var(--mono);font-size:13px;font-weight:500;color:var(--mute)}
+.dl ol{list-style:none;margin:0 0 20px;padding:0}
+.dl a{display:flex;align-items:baseline;gap:10px;padding:6px 0;text-decoration:none;color:var(--ink)}
+.dl a .n{font-family:var(--mono);font-size:13px;color:var(--accent);width:44px;flex:none}
+.dl a .d{flex:1;border-bottom:1px dotted #8d8d8d;transform:translateY(-4px);min-width:24px}
+.dl a .p{font-family:var(--mono);font-size:13px;color:var(--mute)}
+.dl a:hover .t{text-decoration:underline}
+.meta{display:none}
+.map{margin:20px 0 0;border-top:1px solid var(--line)}
+.map div{display:grid;grid-template-columns:1fr auto;gap:16px;padding:14px 0;border-bottom:1px solid var(--hair)}
+.map dt{color:var(--ink)}.map dd{margin:0;font-family:var(--mono);font-size:13px}
+.map a{color:var(--accent);text-decoration:none}.map a:hover{text-decoration:underline}
+footer{font-size:13px;color:var(--mute);padding:8px 0 24px}
+@media (max-width:1023px){.frame{grid-template-columns:1fr;padding:24px 16px}.toc{display:none}}
+@media (max-width:767px){.sheet .in,.cover .in{padding:24px 18px}.tb{grid-template-columns:1fr 1fr}.tb div{border-left:0;border-top:1px solid var(--hair)}
+  .tb .wide{grid-column:span 2}.nums b{font-size:22px}.nums div{padding:12px}}
+
+h1,h2,h3{text-wrap:balance}
+img{display:block;max-width:100%;height:auto}
+.fig{margin-top:28px}
+.shot{margin:0;overflow:hidden;border-radius:var(--r);background:var(--card);box-shadow:var(--shot-shadow);cursor:zoom-in;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.shot:hover{transform:translateY(-3px)}
+.shot img{width:100%}
+.l-two{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+.l-one .shot img{width:100%}
+.l-tall{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*var(--gap))/4);gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px}
+.l-tall .shot{scroll-snap-align:start}.l-tall .shot img{aspect-ratio:9/22;object-fit:cover;object-position:top}
+.l-grid6{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:clamp(140px,15vw,220px);gap:var(--gap)}
+.l-grid6>:nth-child(1),.l-grid6>:nth-child(4){grid-column:span 4}.l-grid6>:nth-child(2),.l-grid6>:nth-child(3){grid-column:span 2}
+.l-grid6>:nth-child(5),.l-grid6>:nth-child(6){grid-column:span 3}
+.l-grid6 .shot img{height:100%;object-fit:cover;object-position:left top}
+.l-phones{display:grid;grid-template-columns:repeat(6,1fr);gap:calc(var(--gap)*.75)}
+.l-phones .shot{border-radius:calc(var(--r) + 6px)}
+.l-bento3{display:grid;grid-template-columns:1.4fr 1fr;gap:var(--gap)}
+.l-bento3 .shot:first-child{grid-row:span 2}.l-bento3 .shot img{height:100%;object-fit:cover;object-position:left top}
+.l-mix4{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--gap)}
+.l-mix4>:nth-child(1),.l-mix4>:nth-child(4){grid-column:span 3}.l-mix4>:nth-child(2),.l-mix4>:nth-child(3){grid-column:span 2}
+.l-mix4 .shot img{aspect-ratio:4/3;object-fit:cover;object-position:top}
+.result{margin-top:20px;width:100%;border-collapse:collapse;font-size:14px}
+.result th,.result td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--hair)}
+.result th{font-weight:500;color:var(--mute);font-size:12.5px}
+.result .v{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.result td.v{color:var(--accent);font-weight:600}
+.cap{margin:10px 0 0;font-size:13px;color:var(--mute)}
+dialog{overscroll-behavior:contain;padding:0;border:0;background:transparent;max-width:min(1400px,94vw);max-height:92dvh}
+dialog::backdrop{background:rgba(8,8,10,.86)}
+dialog img{max-height:88dvh;width:auto;margin:auto;border-radius:6px}
+dialog button{position:fixed;top:16px;right:16px;min-width:64px;height:44px;border:0;border-radius:6px;background:#fff;color:#111;font:600 14px/1 inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+a,button,.shot{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:50;background:var(--card);color:var(--ink);padding:8px 12px}
+@media (prefers-reduced-motion:no-preference){.js .rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}.js .rv.in{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.shot,.shot:hover{transition:none;transform:none}html{scroll-behavior:auto!important}}
+@media (max-width:767px){
+  .l-two,.l-bento3{grid-template-columns:1fr}.l-bento3 .shot:first-child{grid-row:auto}
+  .l-tall{grid-auto-columns:62%}
+  .l-grid6{grid-template-columns:1fr 1fr}.l-grid6>:nth-child(n){grid-column:span 1}.l-grid6>:nth-child(1),.l-grid6>:nth-child(4){grid-column:span 2}
+  .l-phones{grid-template-columns:repeat(3,1fr)}
+  .l-mix4{grid-template-columns:1fr}.l-mix4>:nth-child(n){grid-column:auto}
+  .result th,.result td{padding:10px 8px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 이동</a>
+
+<div class="frame">
+<nav class="toc" aria-label="도면 목록"><p class="lbl">도면 목록</p><ol><span class="mk" aria-hidden="true"></span><li><a href="#p01"><span class="n">A-01</span><span>시장 조사</span></a></li><li><a href="#p02"><span class="n">A-02</span><span>레퍼런스 실측</span></a></li><li><a href="#p03"><span class="n">A-03</span><span>데모 사이트 32곳</span></a></li><li><a href="#p04"><span class="n">A-04</span><span>법정 고지 · 모바일</span></a></li><li><a href="#p05"><span class="n">A-05</span><span>디자인 체계</span></a></li><li><a href="#p06"><span class="n">A-06</span><span>자동 검수</span></a></li><li><a href="#p07"><span class="n">A-07</span><span>판매 자료 · 문서</span></a></li><li><a href="#p08"><span class="n">B-01</span><span>ERP 대시보드</span></a></li><li><a href="#p09"><span class="n">B-02</span><span>ERP 로그인 · 색 체계</span></a></li><li><a href="#p10"><span class="n">B-03</span><span>토큰 · 인수인계</span></a></li><li><a href="#fit"><span class="n">C-01</span><span>직무 연결</span></a></li></ol>
+<a class="btn" href="https://leesssbb.github.io/cmong-demos/" target="_blank" rel="noopener">데모 사이트 모음 <span aria-hidden="true">→</span></a></nav>
+<main id="main">
+<section class="sheet cover"><div class="in"><div class="no">표지</div><h1>이승빈</h1><p class="role">토목 엔지니어 · 바이브 코딩 포트폴리오</p><p class="intro">토목 석사와 BIM 설계 실무 1년의 경험을 바탕으로, Claude Code로 직접 기획하고 제작한 홈페이지 제작 프로젝트와 사내 웹 ERP 화면 프로젝트를 10페이지로 정리하였습니다.</p>
+<div class="nums"><div><b>32곳</b><span>제작한 홈페이지</span></div><div><b>263</b><span>배포한 페이지</span></div><div><b>3,219</b><span>분석한 시장 서비스</span></div></div>
+<div class="dl"><h3>A · 홈페이지 제작</h3><ol><li><a href="#p01"><span class="n">A-01</span><span class="t">홈페이지 제작 시장 조사</span><span class="d" aria-hidden="true"></span><span class="p">01</span></a></li><li><a href="#p02"><span class="n">A-02</span><span class="t">레퍼런스 실측 기반 화면 설계</span><span class="d" aria-hidden="true"></span><span class="p">02</span></a></li><li><a href="#p03"><span class="n">A-03</span><span class="t">업종별 데모 사이트 제작 및 배포</span><span class="d" aria-hidden="true"></span><span class="p">03</span></a></li><li><a href="#p04"><span class="n">A-04</span><span class="t">업종별 법정 고지 및 모바일 대응</span><span class="d" aria-hidden="true"></span><span class="p">04</span></a></li><li><a href="#p05"><span class="n">A-05</span><span class="t">디자인 체계 및 조합 도구 구축</span><span class="d" aria-hidden="true"></span><span class="p">05</span></a></li><li><a href="#p06"><span class="n">A-06</span><span class="t">자동 검수 도구 및 회귀 검사</span><span class="d" aria-hidden="true"></span><span class="p">06</span></a></li><li><a href="#p07"><span class="n">A-07</span><span class="t">판매 자료 및 서비스 기준 문서</span><span class="d" aria-hidden="true"></span><span class="p">07</span></a></li></ol><h3>B · 사내 웹 ERP</h3><ol><li><a href="#p08"><span class="n">B-01</span><span class="t">ERP 대시보드 화면 설계</span><span class="d" aria-hidden="true"></span><span class="p">08</span></a></li><li><a href="#p09"><span class="n">B-02</span><span class="t">ERP 로그인 화면 및 색 체계</span><span class="d" aria-hidden="true"></span><span class="p">09</span></a></li><li><a href="#p10"><span class="n">B-03</span><span class="t">디자인 토큰 문서화 및 인수인계</span><span class="d" aria-hidden="true"></span><span class="p">10</span></a></li></ol></div></div>
+<dl class="tb"><div class="wide"><dt>도면명</dt><dd>포트폴리오 표지 및 도면 목록</dd></div><div><dt>매수</dt><dd>표지 + 11매</dd></div>
+<div><dt>지원</dt><dd>㈜두아즈</dd></div><div class="wide"><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section>
+<section class="sheet" id="p01"><div class="in"><div class="no">A-01</div><h2>홈페이지 제작 시장 조사</h2><p class="desc">홈페이지 제작 외주를 준비하며 크몽 해당 카테고리의 서비스 3,219개를 수집하고 상세 설명 299개를 분석하였습니다. 가격 분포와 문장 12,117개의 길이·표현 빈도를 수치로 정리하여 서비스 기획의 근거로 활용하였습니다.</p><div class="fig l-two rv"><figure class="shot"><img src="../img/board.jpg" width="1440" height="900" alt="크몽 상세페이지 분석 보드 첫 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/board-2.jpg" width="1440" height="900" alt="분석 보드의 개인·사업자 비교 표" loading="lazy" decoding="async"></figure></div></div><dl class="tb"><div><dt>도면번호</dt><dd>A-01</dd></div><div><dt>프로젝트</dt><dd>홈페이지 제작</dd></div><div><dt>수집</dt><dd>서비스 3,219개</dd></div><div><dt>분석</dt><dd>상세 설명 299개</dd></div><div><dt>계측</dt><dd>문장 12,117개</dd></div><div><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section><section class="sheet" id="p02"><div class="in"><div class="no">A-02</div><h2>레퍼런스 실측 기반 화면 설계</h2><p class="desc">업종별 실존 사이트를 Playwright로 열어 섹션 순서·글자 크기·여백·버튼 모양을 수치로 측정하였습니다. 이미지와 문구는 가져오지 않고 측정값만 옮겨, 업종 관습과 접근성에 맞게 화면을 다시 구성하였습니다.</p><div class="fig l-tall rv" tabindex="0" aria-label="결과 화면, 가로로 넘겨 보기"><figure class="shot"><img src="../img/cmp-dental-bareunsup.jpg" width="609" height="1500" alt="치과 데모 사이트 전체 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/cmp-mfg-daon.jpg" width="764" height="1500" alt="제조사 데모 사이트 전체 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/cmp-law-jeongdo.jpg" width="726" height="1500" alt="법무법인 데모 사이트 전체 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/cmp-care-hansol.jpg" width="724" height="1500" alt="요양원 데모 사이트 전체 화면" loading="lazy" decoding="async"></figure></div></div><dl class="tb"><div><dt>도면번호</dt><dd>A-02</dd></div><div><dt>프로젝트</dt><dd>홈페이지 제작</dd></div><div><dt>측정 도구</dt><dd>Playwright</dd></div><div><dt>측정 항목</dt><dd>타이포 · 여백 · 버튼 · 호버</dd></div><div><dt>대상</dt><dd>GDWEB 선정작 중심 16곳</dd></div><div><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section><section class="sheet" id="p03"><div class="in"><div class="no">A-03</div><h2>업종별 데모 사이트 제작 및 배포</h2><p class="desc">의료·법률·세무·제조·물류·IT 등 업종별 홈페이지 32곳을 제작하여 GitHub Pages에 배포하였습니다. 사이트마다 메인과 소개·안내·오시는 길 등 하위 페이지를 갖추고, 공지사항 게시판까지 구성하였습니다.</p><div class="fig l-grid6 rv"><figure class="shot"><img src="../img/d-mfg-daon.jpg" width="1440" height="900" alt="식품 포장재 제조사 데모 사이트 메인" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/d-tax-hanseom.jpg" width="1440" height="900" alt="세무회계 사무소 데모 사이트 메인" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/d-derm-yeoul.jpg" width="1440" height="900" alt="피부과 데모 사이트 메인" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/d-logi-baekdu.jpg" width="1440" height="900" alt="물류센터 데모 사이트 메인" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/d-it-narae.jpg" width="1440" height="900" alt="IT 솔루션 기업 데모 사이트 메인" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/d-cafe-ondo.jpg" width="1440" height="900" alt="로스터리 카페 데모 사이트 메인" loading="lazy" decoding="async"></figure></div><p class="cap">모든 사이트는 포트폴리오용 가상 업체이며, 각 사이트 하단에 실제 영업 업체가 아님을 표기하였습니다.</p></div><dl class="tb"><div><dt>도면번호</dt><dd>A-03</dd></div><div><dt>프로젝트</dt><dd>홈페이지 제작</dd></div><div><dt>규모</dt><dd>32곳 · 263페이지</dd></div><div><dt>배포</dt><dd>GitHub Pages</dd></div><div><dt>주소</dt><dd>cmong-demos</dd></div><div><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section><section class="sheet" id="p04"><div class="in"><div class="no">A-04</div><h2>업종별 법정 고지 및 모바일 대응</h2><p class="desc">의료법·수의사법 등 업종별 광고 규정을 사이트마다 반영하여 후기·전후 사진·효과 보장 표현을 제외하였습니다. 모든 사이트에 오시는 길 메뉴와 휴대폰 하단 고정 바를 갖추어 국내 방문자의 이용 방식에 맞추었습니다.</p><div class="fig l-phones rv"><figure class="shot"><img src="../img/m-dental-bareunsup.jpg" width="720" height="1558" alt="치과 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/m-kids-badasol.jpg" width="720" height="1558" alt="어린이집 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/m-korm-cheongmyeong.jpg" width="720" height="1558" alt="한의원 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/m-law-jeongdo.jpg" width="720" height="1558" alt="법무법인 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/m-pilates-coreline.jpg" width="720" height="1558" alt="필라테스 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/m-stay-nobaek.jpg" width="720" height="1558" alt="펜션 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure></div><div class="fig l-one rv"><figure class="shot"><img src="../img/gal-07.jpg" width="978" height="733" alt="업종별 법정 고지 정리 표" loading="lazy" decoding="async"></figure></div></div><dl class="tb"><div><dt>도면번호</dt><dd>A-04</dd></div><div><dt>프로젝트</dt><dd>홈페이지 제작</dd></div><div><dt>반영 법령</dt><dd>의료법 · 수의사법 외</dd></div><div><dt>모바일</dt><dd>하단 고정 바</dd></div><div><dt>메뉴</dt><dd>오시는 길 1차 메뉴</dd></div><div><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section><section class="sheet" id="p05"><div class="in"><div class="no">A-05</div><h2>디자인 체계 및 조합 도구 구축</h2><p class="desc">레이아웃 55종, 템플릿 65종, 색 스킴 32종, 이미지팩 30종, UI 킷 14종을 데이터로 정리하였습니다. 업종과 톤을 고르면 조합 결과를 주문서 파일로 저장하는 스튜디오 화면을 함께 제작하였습니다.</p><div class="fig l-bento3 rv"><figure class="shot"><img src="../img/tpl-layouts.jpg" width="1440" height="900" alt="레이아웃 55종 보드" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/tpl-colors.jpg" width="1440" height="900" alt="색 스킴 32종 보드" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/tpl-ui.jpg" width="1440" height="900" alt="UI 킷 실측 근거 보드" loading="lazy" decoding="async"></figure></div></div><dl class="tb"><div><dt>도면번호</dt><dd>A-05</dd></div><div><dt>프로젝트</dt><dd>홈페이지 제작</dd></div><div><dt>데이터</dt><dd>JSON 파일 13종</dd></div><div><dt>업종 처방</dt><dd>52개 업종</dd></div><div><dt>산출</dt><dd>주문서 → 사이트 제작</dd></div><div><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section><section class="sheet" id="p06"><div class="in"><div class="no">A-06</div><h2>자동 검수 도구 및 회귀 검사</h2><p class="desc">263개 페이지의 깨진 링크와 금지 표현을 자동으로 검사하고, 신규 16곳의 128개 화면에서 가로 넘침을 확인하였습니다. 본문이 사라지는 오류를 계기로 실제 열람 조건을 재현하는 회귀 검사를 추가하였습니다.</p><div class="fig l-one rv"><figure class="shot"><img src="../img/new-list.jpg" width="1440" height="900" alt="신규 제작 사이트 모음 화면" loading="lazy" decoding="async"></figure></div><table class="result rv"><thead><tr><th scope="col">검사 항목</th><th scope="col">대상</th><th scope="col" class="v">결과</th></tr></thead><tbody><tr><td>깨진 내부 링크</td><td>263페이지</td><td class="v">0건</td></tr><tr><td>가로 넘침 · 콘솔 오류</td><td>16곳 × 4쪽 × 2폭 = 128화면</td><td class="v">0건</td></tr><tr><td>본문 숨김 회귀 검사</td><td>http · 파일 직접 열기 두 경로</td><td class="v">통과</td></tr><tr><td>검사기 검출 확인</td><td>오류를 일부러 넣은 사이트</td><td class="v">검출</td></tr></tbody></table></div><dl class="tb"><div><dt>도면번호</dt><dd>A-06</dd></div><div><dt>프로젝트</dt><dd>홈페이지 제작</dd></div><div><dt>링크 검사</dt><dd>263페이지 · 0건</dd></div><div><dt>화면 검사</dt><dd>128화면 · 0건</dd></div><div><dt>회귀 검사</dt><dd>http · 파일 두 경로</dd></div><div><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section><section class="sheet" id="p07"><div class="in"><div class="no">A-07</div><h2>판매 자료 및 서비스 기준 문서</h2><p class="desc">크몽 등록용 갤러리 9장과 포트폴리오 17건을 제작하여 브라우저 자동화로 등록하였습니다. 도메인·호스팅·견적 산출 방식을 서비스 제공 기준으로 정리하고, 제안서 템플릿을 문서로 마련하였습니다.</p><div class="fig l-mix4 rv"><figure class="shot"><img src="../img/gal-01.jpg" width="978" height="733" alt="크몽 갤러리 표지" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/gal-02.jpg" width="978" height="733" alt="크몽 갤러리 제작 가능 업종" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/service-std.jpg" width="1440" height="900" alt="서비스 제공 기준 문서" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/proposal.jpg" width="1440" height="900" alt="제안서 템플릿 문서" loading="lazy" decoding="async"></figure></div></div><dl class="tb"><div><dt>도면번호</dt><dd>A-07</dd></div><div><dt>프로젝트</dt><dd>홈페이지 제작</dd></div><div><dt>산출물</dt><dd>갤러리 9장 · 포트폴리오 17건</dd></div><div><dt>등록 방식</dt><dd>브라우저 자동화</dd></div><div><dt>문서</dt><dd>서비스 기준 · 제안서 템플릿</dd></div><div><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section><section class="sheet" id="p08"><div class="in"><div class="no">B-01</div><h2>ERP 대시보드 화면 설계</h2><p class="desc">구매·재무·인사 결재 워크플로우를 한 화면에서 관리하는 사내 웹 ERP의 대시보드를 설계하였습니다. 실행 건수와 월별 처리량, 부서별 진행 상태를 KPI 카드·차트·표로 구성하였습니다.</p><div class="fig l-one rv"><figure class="shot"><img src="../img/erp-dash.jpg" width="1440" height="900" alt="ERP 대시보드. 아이콘 레일과 사이드바, 실행 KPI, 월별 처리량 차트, 워크플로우 표" loading="lazy" decoding="async"></figure></div><p class="cap">화면의 인명·수치는 화면 설계를 위한 예시 데이터입니다.</p></div><dl class="tb"><div><dt>도면번호</dt><dd>B-01</dd></div><div><dt>프로젝트</dt><dd>사내 웹 ERP</dd></div><div><dt>기간</dt><dd>2026.09</dd></div><div><dt>도구</dt><dd>Claude Code · HTML · CSS</dd></div><div><dt>화면</dt><dd>대시보드 · 로그인 · 디자인 보드</dd></div><div><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section><section class="sheet" id="p09"><div class="in"><div class="no">B-02</div><h2>ERP 로그인 화면 및 색 체계</h2><p class="desc">사번·회사 이메일 로그인과 사내 SSO·인증서 로그인을 갖춘 로그인 화면을 제작하였습니다. 레퍼런스 이미지의 색을 픽셀 단위로 샘플링하여 세 가지 색 계열과 유리 질감 규칙으로 정리하였습니다.</p><div class="fig l-two rv"><figure class="shot"><img src="../img/erp-login.jpg" width="1440" height="900" alt="ERP 로그인 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/board-erp-2.jpg" width="1440" height="900" alt="디자인 보드의 컬러 팔레트" loading="lazy" decoding="async"></figure></div></div><dl class="tb"><div><dt>도면번호</dt><dd>B-02</dd></div><div><dt>프로젝트</dt><dd>사내 웹 ERP</dd></div><div><dt>로그인 방식</dt><dd>사번 · 이메일 · SSO · 인증서</dd></div><div><dt>색 체계</dt><dd>3개 계열 × 8단계</dd></div><div><dt>상태 색</dt><dd>진행 · 대기 · 보류</dd></div><div><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section><section class="sheet" id="p10"><div class="in"><div class="no">B-03</div><h2>디자인 토큰 문서화 및 인수인계</h2><p class="desc">색·표면·차트·타이포를 디자인 토큰으로 정리하고, 새 화면을 같은 규칙으로 만드는 적용 기준을 문서화하였습니다. 폰트와 이미지를 내장한 단일 HTML 빌드와 인수인계 파일 생성 스크립트를 작성하였습니다.</p><div class="fig l-two rv"><figure class="shot"><img src="../img/board-erp-5.jpg" width="1440" height="900" alt="디자인 보드의 컴포넌트 스펙" loading="lazy" decoding="async"></figure><figure class="shot"><img src="../img/board-erp-6.jpg" width="1440" height="900" alt="디자인 보드의 토큰 표와 적용 매핑" loading="lazy" decoding="async"></figure></div></div><dl class="tb"><div><dt>도면번호</dt><dd>B-03</dd></div><div><dt>프로젝트</dt><dd>사내 웹 ERP</dd></div><div><dt>문서</dt><dd>토큰 표 · 컴포넌트 스펙 · 원칙</dd></div><div><dt>빌드</dt><dd>Python 단일 HTML 생성</dd></div><div><dt>인수인계</dt><dd>소스 전체 내장 파일</dd></div><div><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section>
+<section class="sheet" id="fit"><div class="in"><div class="no">C-01</div><h2>두아즈 담당 업무와의 연결</h2><p class="desc">공고의 담당 업무마다 가장 가까운 작업을 연결하였습니다. 토목 설계와 BIM 실무에서 익힌 도면 이해 역량은 모든 항목의 바탕이 됩니다.</p>
+<dl class="map"><div><dt>설계 도면·기술 문서의 검수 및 구조화</dt><dd><a href="#p01">A-01</a> · <a href="#p05">A-05</a></dd></div><div><dt>AI 분석 결과의 공학적 검증 및 개선 제안</dt><dd><a href="#p02">A-02</a> · <a href="#p06">A-06</a></dd></div><div><dt>바이브 코딩을 활용한 내부 업무 자동화 도구 제작</dt><dd><a href="#p07">A-07</a> · <a href="#p10">B-03</a></dd></div><div><dt>건축법규·시방서·구조 기준 등 규정 데이터셋 구축</dt><dd><a href="#p04">A-04</a> · <a href="#p05">A-05</a></dd></div><div><dt>고객사 PoC 프로젝트 참여</dt><dd><a href="#p03">A-03</a> · <a href="#p08">B-01</a></dd></div></dl></div>
+<dl class="tb"><div><dt>도면번호</dt><dd>C-01</dd></div><div class="wide"><dt>도면명</dt><dd>담당 업무 대응표</dd></div><div><dt>대상</dt><dd>공고 담당 업무 5항목</dd></div>
+<div class="wide"><dt>작성</dt><dd>이승빈 · 2026.09</dd></div></dl></section>
+<footer>이승빈 · 2026년 9월 작성 · 모든 화면은 본인이 제작한 결과물을 직접 캡처한 것입니다.</footer>
+</main></div>
+<dialog id="lb" aria-label="이미지 크게 보기"><button type="button">닫기</button><img alt=""></dialog>
+<script>
+(function(){
+  var root=document.documentElement; root.classList.add('js');
+  var rv=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px'});
+    rv.forEach(function(el){io.observe(el)});
+    setTimeout(function(){rv.forEach(function(el){el.classList.add('in')})},2500);
+  } else rv.forEach(function(el){el.classList.add('in')});
+  var lb=document.getElementById('lb'), li=lb.querySelector('img');
+  document.querySelectorAll('.shot').forEach(function(f){
+    f.tabIndex=0; f.setAttribute('role','button');
+    var open=function(){var im=f.querySelector('img'); li.src=im.src; li.alt=im.alt; lb.showModal();};
+    f.addEventListener('click',open);
+    f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  });
+  lb.addEventListener('click',function(e){if(e.target!==li) lb.close();});
+})();
+
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.toc a')), mk=document.querySelector('.toc .mk');
+  if(!mk||!('IntersectionObserver' in window)) return;
+  var byId={}; links.forEach(function(a){byId[a.getAttribute('href').slice(1)]=a});
+  var so=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting) return; var a=byId[e.target.id]; if(!a) return;
+    links.forEach(function(l){l.classList.toggle('on',l===a)}); mk.style.transform='translateY('+a.offsetTop+'px)';});},{rootMargin:'-35% 0px -60% 0px'});
+  document.querySelectorAll('.sheet[id]').forEach(function(s){so.observe(s)});
+})();</script>
+</body>
+</html>
