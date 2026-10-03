@@ -1,268 +1,553 @@
-<!DOCTYPE html>
-<!--
-시안 D · 모노톤 다크 제품 소개형 (레퍼런스: 핀터레스트 1134062749951073941, 'Onion AI' 랜딩 흑백 시안)
-Design read: 채용 담당자용 개발 포트폴리오, AI 제품 랜딩의 흑백 모노톤 언어, 중앙 정렬 히어로 + 알약 라벨 + 벤토 카드.
-Dials VARIANCE 6 / MOTION 4 / DENSITY 4. 레퍼런스가 다크 단일 테마이므로 페이지 테마를 다크로 고정하였다.
-히어로 배경의 곡면 선은 토목 도면의 등고선을 연상하도록 CSS 반복 그라데이션으로 그린 장식이며 이미지 생성물이 아니다.
-모서리 규칙: 카드 20px · 카드 안 화면 10px · 버튼과 라벨은 알약형. 강조색은 흰색 하나만 쓴다.
-원고는 tools/content.py 공유, 아이콘 Phosphor, 도구 로고 Simple Icons.
--->
-<html lang="ko">
+<!doctype html>
+<html lang="ko" class="no-js">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>이승빈 포트폴리오</title>
-<meta name="robots" content="noindex, nofollow">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23171717%27/%3E%3Cpath d=%27M9 22V10h3v9.5h7V22z%27 fill=%27%23fff%27/%3E%3C/svg%3E"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<meta name="description" content="토목 석사 · BIM 설계 실무 경력 · 홈페이지 제작과 사내 웹 ERP 화면 프로젝트">
-<meta name="theme-color" content="#09090b">
-<style>
-h1,h2,h3{text-wrap:balance}
-img{display:block;max-width:100%;height:auto}
-.fig{margin-top:28px}
-.shot{margin:0;overflow:hidden;border-radius:var(--r);background:var(--card);box-shadow:var(--shot-shadow);cursor:zoom-in;
-  transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
-.shot:hover{transform:translateY(-3px)}
-.shot img{width:100%}
-.l-two{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
-.l-one .shot img{width:100%}
-.l-tall{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*var(--gap))/4);gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px}
-.l-tall .shot{scroll-snap-align:start}.l-tall .shot img{aspect-ratio:9/22;object-fit:cover;object-position:top}
-.l-grid6{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:clamp(140px,15vw,220px);gap:var(--gap)}
-.l-grid6>:nth-child(1),.l-grid6>:nth-child(4){grid-column:span 4}.l-grid6>:nth-child(2),.l-grid6>:nth-child(3){grid-column:span 2}
-.l-grid6>:nth-child(5),.l-grid6>:nth-child(6){grid-column:span 3}
-.l-grid6 .shot img{height:100%;object-fit:cover;object-position:left top}
-.l-phones{display:grid;grid-template-columns:repeat(6,1fr);gap:calc(var(--gap)*.75)}
-.l-phones .shot{border-radius:calc(var(--r) + 6px)}
-.l-bento3{display:grid;grid-template-columns:1.4fr 1fr;gap:var(--gap)}
-.l-bento3 .shot:first-child{grid-row:span 2}.l-bento3 .shot img{height:100%;object-fit:cover;object-position:left top}
-.l-mix4{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--gap)}
-.l-mix4>:nth-child(1),.l-mix4>:nth-child(4){grid-column:span 3}.l-mix4>:nth-child(2),.l-mix4>:nth-child(3){grid-column:span 2}
-.l-mix4 .shot img{aspect-ratio:4/3;object-fit:cover;object-position:top}
-.result{margin-top:20px;width:100%;border-collapse:collapse;font-size:14px}
-.result th,.result td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--hair)}
-.result th{font-weight:500;color:var(--mute);font-size:12.5px}
-.result .v{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.result td.v{color:var(--accent);font-weight:600}
-.cap{margin:10px 0 0;font-size:13px;color:var(--mute)}
-dialog{overscroll-behavior:contain;padding:0;border:0;background:transparent;max-width:min(1400px,94vw);max-height:92dvh}
-dialog::backdrop{background:rgba(8,8,10,.86)}
-dialog img{max-height:88dvh;width:auto;margin:auto;border-radius:6px}
-dialog button{position:fixed;top:16px;right:16px;min-width:64px;height:44px;border:0;border-radius:6px;background:#fff;color:#111;font:600 14px/1 inherit;cursor:pointer}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-a,button,.shot{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:50;background:var(--card);color:var(--ink);padding:8px 12px}
-@media (prefers-reduced-motion:no-preference){.js .rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}.js .rv.in{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.shot,.shot:hover{transition:none;transform:none}html{scroll-behavior:auto!important}}
-@media (max-width:767px){
-  .l-two,.l-bento3{grid-template-columns:1fr}.l-bento3 .shot:first-child{grid-row:auto}
-  .l-tall{grid-auto-columns:62%}
-  .l-grid6{grid-template-columns:1fr 1fr}.l-grid6>:nth-child(n){grid-column:span 1}.l-grid6>:nth-child(1),.l-grid6>:nth-child(4){grid-column:span 2}
-  .l-phones{grid-template-columns:repeat(3,1fr)}
-  .l-mix4{grid-template-columns:1fr}.l-mix4>:nth-child(n){grid-column:auto}
-  .result th,.result td{padding:10px 8px}
-}
-
-:root{color-scheme:dark;--bg:#09090b;--bg2:#0f0f11;--card:#131315;--ink:#f4f4f5;--body:#b4b4bb;--mute:#8a8a93;--line:rgba(255,255,255,.08);
-  --hair:rgba(255,255,255,.08);--accent:#f4f4f5;--r:10px;--gap:12px;--ease:cubic-bezier(.16,1,.3,1);--shot-shadow:0 0 0 1px rgba(255,255,255,.08)}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,system-ui,sans-serif;word-break:keep-all;-webkit-font-smoothing:antialiased;line-height:1.6}
-a{color:inherit}
-.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:2px;height:48px;padding:0 6px;border-radius:999px;
-  background:rgba(20,20,22,.72);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
-  border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);white-space:nowrap}
-.nav a{padding:8px 14px;border-radius:999px;font-size:14px;color:var(--body);text-decoration:none;transition:background .2s,color .2s}
-.nav a:hover{background:rgba(255,255,255,.07);color:var(--ink)}
-.nav .me{color:var(--ink);font-weight:600}
-/* 히어로: 등고선 곡면 + 수렴하는 바닥선 */
-.hero{position:relative;min-height:min(100dvh,980px);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:128px 16px 0;overflow:hidden;text-align:center}
-.bg{position:absolute;inset:0;pointer-events:none}
-.dune{position:absolute;width:1100px;height:1100px;border-radius:50%;
-  background:repeating-radial-gradient(circle at 50% 50%,rgba(255,255,255,.26) 0 1px,transparent 1.6px 8px);
-  -webkit-mask-image:radial-gradient(circle at 50% 50%,transparent 22%,#000 36%,#000 48%,transparent 70%);mask-image:radial-gradient(circle at 50% 50%,transparent 22%,#000 36%,#000 48%,transparent 70%)}
-.dune.l{left:-560px;top:-120px;transform:scaleX(.55) rotate(-24deg)}
-.dune.r{right:-560px;top:-120px;transform:scaleX(.55) rotate(24deg)}
-.floor{position:absolute;left:-50%;right:-50%;bottom:0;height:46%;transform-origin:50% 100%;transform:perspective(380px) rotateX(62deg);
-  background:repeating-linear-gradient(90deg,rgba(255,255,255,.32) 0 1px,transparent 1px 10px);
-  -webkit-mask-image:radial-gradient(60% 120% at 50% 100%,#000 20%,transparent 75%);mask-image:radial-gradient(60% 120% at 50% 100%,#000 20%,transparent 75%)}
-.hero::after{content:"";position:absolute;inset:auto 0 0;height:90px;background:linear-gradient(to bottom,transparent,var(--bg));pointer-events:none}
-.hero .in{position:relative;z-index:2;max-width:860px}
-.who{margin:0 0 18px;font-size:14px;color:var(--mute)}
-.hero h1{margin:0;font-size:clamp(32px,5.2vw,60px);line-height:1.18;letter-spacing:-.035em;font-weight:650;
-  background:linear-gradient(180deg,#fff 30%,#a1a1aa);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{margin:22px auto 0;max-width:620px;font-size:17px;line-height:1.75;color:var(--body)}
-.cta{margin-top:32px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:6px;height:46px;padding:0 22px;border-radius:999px;background:var(--ink);color:#111113;font-weight:600;font-size:15px;text-decoration:none;
-  box-shadow:0 0 0 1px rgba(255,255,255,.2),0 8px 30px rgba(255,255,255,.12);transition:transform .2s var(--ease)}
-.btn:active{transform:scale(.98)}
-.btn.ghost{background:rgba(255,255,255,.04);color:var(--ink);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
-.btn.ghost:hover{background:rgba(255,255,255,.08)}
-.core{position:relative;z-index:2;margin-top:40px;display:flex;flex-direction:column;align-items:center}
-.beam{width:2px;height:120px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.7));box-shadow:0 0 24px 6px rgba(255,255,255,.12)}
-.tile{position:relative;display:grid;place-items:center;width:92px;height:92px;border-radius:24px;font-size:40px;color:#fff;
-  background:linear-gradient(160deg,#2c2c30,#0e0e10 70%);border:1px solid rgba(255,255,255,.22);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 0 0 8px rgba(255,255,255,.035),0 0 0 9px rgba(255,255,255,.06),0 30px 80px rgba(255,255,255,.1)}
-.tile::after{content:"";position:absolute;left:-60px;right:-60px;bottom:-70px;height:90px;background:radial-gradient(closest-side,rgba(255,255,255,.28),transparent);filter:blur(6px)}
-.tools{position:relative;z-index:2;list-style:none;margin:-40px auto 0;padding:0 16px;max-width:980px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 44px}
-.tools li{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:600;color:#d4d4d8;letter-spacing:-.01em}
-.tools img{filter:invert(1);opacity:.85}
-/* 공통 섹션 */
-.sec{max-width:1200px;margin:0 auto;padding:128px 20px 0}
-.head{text-align:center;margin-bottom:44px}
-.pill{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 13px;border-radius:999px;background:#141416;border:1px solid rgba(255,255,255,.12);
-  font-size:12.5px;color:#c9c9cf;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-.pill i{font-size:14px}
-.head h2{margin:16px 0 0;font-size:clamp(28px,3.4vw,42px);letter-spacing:-.03em;font-weight:650;line-height:1.2}
-.head .pill+h2{margin-top:16px}.head h2:first-child{margin-top:0}
-.lead{margin:14px auto 0;max-width:620px;font-size:15.5px;color:var(--mute);line-height:1.75}
-.ic{display:inline-grid;place-items:center;flex:none;width:46px;height:46px;border-radius:12px;font-size:22px;color:#fff;
-  background:linear-gradient(160deg,#2a2a2e,#111113);border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
-.surf{background:linear-gradient(180deg,#161618,#0d0d0f);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-/* 작업 규모 */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:960px;margin:0 auto}
-.stat{display:flex;align-items:center;gap:18px;padding:22px 24px;border-radius:20px;background:linear-gradient(180deg,#161618,#0d0d0f);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-.stat p{margin:0;display:flex;flex-direction:column}
-.stat b{font-size:26px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.2}
-.stat span{font-size:14px;color:var(--mute)}
-/* 직무 연결 */
-.fits{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.fit{display:flex;flex-direction:column;padding:24px 18px 18px;border-radius:20px;min-height:300px;
-  background:radial-gradient(120% 60% at 50% 0%,rgba(255,255,255,.06),transparent 60%),linear-gradient(180deg,#151517,#0c0c0e);
-  border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-.fit .ic{margin:0 auto}
-.fit h3{margin:16px 0 0;font-size:16px;line-height:1.5;text-align:center;font-weight:600;letter-spacing:-.01em;min-height:3em}
-.fit ul{list-style:none;margin:auto 0 0;padding:18px 0 0;display:grid;gap:6px}
-.fit a{display:flex;align-items:center;gap:9px;height:42px;padding:0 12px;border-radius:10px;font-size:14px;text-decoration:none;color:var(--body);
-  background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);transition:background .2s,color .2s}
-.fit a:hover{background:linear-gradient(90deg,rgba(255,255,255,.14),rgba(255,255,255,.04));color:var(--ink)}
-.fit a .go{margin-left:auto;opacity:.5}
-/* 작업 카드 벤토 */
-.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
-.card{grid-column:span var(--s);position:relative;padding:22px;border-radius:20px;overflow:hidden;
-  background:radial-gradient(90% 50% at 50% 0%,rgba(255,255,255,.045),transparent 70%),linear-gradient(180deg,#151517,#0c0c0e);
-  border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);display:flex;flex-direction:column}
-.card.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:36px;align-items:center;padding:36px}
-.card .txt{display:flex;flex-direction:column;padding:22px 6px 4px}
-.card.split .txt{padding:0}
-.card .ic{width:40px;height:40px;font-size:19px;border-radius:11px}
-.card h3{margin:16px 0 0;font-size:21px;letter-spacing:-.02em;font-weight:620;line-height:1.35}
-.card .desc{margin:10px 0 0;font-size:15px;line-height:1.8;color:var(--body);max-width:62ch}
-.meta{margin:18px 0 0;display:flex;flex-wrap:wrap;gap:8px}
-.meta div{display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);font-size:13px}
-.meta dt{color:var(--mute)}.meta dd{margin:0;color:var(--ink)}
-.cap{font-size:13px;color:var(--mute)}
-.vis{position:relative}
-.card .fig{margin-top:0}
-.shot{background:#1a1a1d}
-.shot:hover{box-shadow:0 0 0 1px rgba(255,255,255,.28)}
-.l-stack{position:relative;padding-bottom:16%}
-.l-stack .shot:first-child{width:84%}
-.l-stack .shot:nth-child(2){position:absolute;right:0;bottom:0;width:60%;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 24px 60px rgba(0,0,0,.7)}
-.l-quad{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
-.l-quad .shot img{aspect-ratio:4/5;object-fit:cover;object-position:top}
-.l-quad4{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
-.l-quad4 .shot img{aspect-ratio:4/3;object-fit:cover;object-position:top}
-.l-bento3{grid-template-columns:1.3fr 1fr}
-.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;align-items:center;margin-top:var(--gap)}.duo .txt{padding:0}
-.card .l-two .shot img{aspect-ratio:4/5;object-fit:cover;object-position:left top}
-.l-grid6{grid-auto-rows:clamp(120px,13vw,200px)}
-.result{margin-top:14px;font-size:13.5px}
-.result td{color:var(--body)}
-.foot{max-width:1200px;margin:0 auto;padding:120px 20px 56px;text-align:center}
-.foot p{margin:0;font-size:13px;color:var(--mute)}
-@media (prefers-reduced-motion:no-preference){
-  .hero .in>*,.core,.tools{animation:up .9s var(--ease) both}
-  .hero .in>:nth-child(2){animation-delay:.06s}.hero .in>:nth-child(3){animation-delay:.12s}.hero .in>:nth-child(4){animation-delay:.18s}
-  .core{animation-delay:.26s}.tools{animation-delay:.34s}
-  @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-  .beam{animation:beam 3.6s ease-in-out infinite alternate}
-  @keyframes beam{from{opacity:.55}to{opacity:1}}
-}
-@media (max-width:1080px){
-  .fits{grid-template-columns:repeat(2,1fr)}
-  .fit{min-height:0}.fit h3{min-height:0}
-  .card{grid-column:span 12}
-  .card.split{grid-template-columns:1fr;gap:24px;padding:22px}
-  .card.split .txt{order:2}
-}
-@media (max-width:767px){
-  .nav a:not(.me){padding:8px 9px;font-size:13px}
-  .nav a[href="#scale"]{display:none}
-  .hero{padding-top:104px;min-height:0;padding-bottom:40px}
-  .sub{font-size:15.5px}
-  .beam{height:72px}
-  .tools{margin-top:0;gap:12px 24px}.tools li{font-size:14px}
-  .dune{width:700px;height:700px}.dune.l{left:-470px}.dune.r{right:-470px}
-  .sec{padding:88px 16px 0}
-  .head{margin-bottom:28px}
-  .stats,.fits{grid-template-columns:1fr}
-  .card{padding:14px}.card .txt{padding:18px 6px 6px}
-  .card h3{font-size:19px}
-  .l-grid6{grid-template-columns:1fr 1fr;grid-auto-rows:120px}
-  .l-grid6>*{grid-column:span 1!important}
-  .l-phones{grid-template-columns:repeat(3,1fr)}
-  .l-bento3{grid-template-columns:1fr}.l-bento3 .shot:first-child{grid-row:auto}
-  .l-two{grid-template-columns:1fr}
-  .duo{grid-template-columns:1fr;gap:0}.duo .txt{padding:18px 6px 6px}
-  .result th:nth-child(2),.result td:nth-child(2){display:none}
-}
-</style>
+<meta charset="utf-8">
+<script>document.documentElement.className = "js" + (matchMedia("(prefers-reduced-motion: reduce)").matches ? " reduce" : "");</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>이승빈 포트폴리오 · LEE SEUNGBIN</title>
+<meta name="description" content="토목 설계 실무와 Claude Code 기반 웹 서비스 포트폴리오. 아이뷰 홈페이지 제작, 스튜디오 진행보드, 모션 영상 합성, 법인 ERP 시스템 구축.">
+<meta name="theme-color" content="#0b0b0b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="이승빈 포트폴리오 · LEE SEUNGBIN">
+<meta property="og:description" content="토목 설계 실무와 Claude Code 기반 웹 서비스 제작">
+<meta property="og:image" content="https://leesssbb.github.io/portfolio/assets/media/reel/og.jpg">
+<meta property="og:url" content="https://leesssbb.github.io/portfolio/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0b0b'/%3E%3Ctext x='32' y='43' font-family='Arial' font-size='30' font-weight='700' fill='%23ecebe6' text-anchor='middle'%3ELS%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body>
-<a class="skip" href="#main">본문으로 이동</a>
+<body class="is-loading">
+<a class="skip" href="#works">본문 바로가기</a>
+<div class="grain" aria-hidden="true"></div>
 
-<nav class="nav" aria-label="주요 메뉴"><a class="me" href="#top">이승빈</a><a href="#scale">작업 규모</a><a href="#fit">직무 연결</a><a href="#web">홈페이지 제작</a><a href="#erp">사내 웹 ERP</a></nav>
-<header class="hero" id="top">
-  <div class="bg" aria-hidden="true"><i class="dune l"></i><i class="dune r"></i><i class="floor"></i></div>
-  <div class="in">
-    <p class="who">이승빈 · 토목 엔지니어 · 바이브 코딩 포트폴리오</p>
-    <h1>토목 엔지니어가 Claude Code로<br>직접 만든 두 가지 프로젝트</h1>
-    <p class="sub">토목 석사와 BIM 설계 실무 1년의 경험을 바탕으로, Claude Code로 직접 기획하고 제작한 홈페이지 제작 프로젝트와 사내 웹 ERP 화면 프로젝트를 10페이지로 정리하였습니다.</p>
-    <div class="cta"><a class="btn" href="#web">작업 보기</a><a class="btn ghost" href="https://leesssbb.github.io/cmong-demos/" target="_blank" rel="noopener">데모 사이트 열기<i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>
-  </div>
-  <div class="core" aria-hidden="true"><span class="beam"></span><span class="tile"><i class="ph ph-compass-tool"></i></span></div>
+<div class="loader" aria-hidden="true">
+  <p class="loader__name mono">Lee Seungbin</p>
+  <p class="loader__year mono">Portfolio 2026</p>
+  <p class="loader__count"><span class="loader__num">000</span></p>
+  <div class="loader__bar"><span></span></div>
+</div>
+
+<header class="nav">
+  <a class="nav__logo mono" href="#top" data-magnetic>Lee Seungbin</a>
+  <nav class="nav__links mono" aria-label="주요 메뉴">
+    <a href="#works" data-magnetic>Works</a>
+    <a href="#w02" data-magnetic>Studio</a>
+    <a href="#background" data-magnetic>Background</a>
+    <a href="#contact" data-magnetic>Contact</a>
+  </nav>
 </header>
-<ul class="tools" aria-label="사용 도구"><li><img src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/claude.svg" alt="" width="20" height="20">Claude Code</li><li><img src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/python.svg" alt="" width="20" height="20">Python</li><li><img src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/github.svg" alt="" width="20" height="20">GitHub Pages</li><li><img src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/html5.svg" alt="" width="20" height="20">HTML</li><li><img src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/css3.svg" alt="" width="20" height="20">CSS</li></ul>
-<main id="main">
-  <section class="sec" id="scale">
-    <div class="head"><span class="pill"><i class="ph ph-sparkle" aria-hidden="true"></i>바이브 코딩</span><h2>작업 규모</h2></div>
-    <div class="stats"><div class="stat rv"><span class="ic" aria-hidden="true"><i class="ph ph-browsers"></i></span><p><b>32곳</b><span>제작한 홈페이지</span></p></div><div class="stat rv"><span class="ic" aria-hidden="true"><i class="ph ph-files"></i></span><p><b>263</b><span>배포한 페이지</span></p></div><div class="stat rv"><span class="ic" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span><p><b>3,219</b><span>분석한 시장 서비스</span></p></div></div>
+
+<main id="top">
+
+  <!-- 쇼릴 -->
+  <section class="hero" aria-label="소개와 쇼릴">
+    <div class="hero__pin">
+      <h1 class="hero__word" aria-label="이승빈 LEE SEUNGBIN">
+        <span class="hero__w" aria-hidden="true">LEE SEUNGBIN</span>
+      </h1>
+      <div class="hero__row">
+        <div class="hero__left">
+          <p class="hero__kr">이승빈</p>
+          <p class="hero__sub">토목 설계 실무와 Claude Code 기반 웹 서비스 제작</p>
+        </div>
+        <div class="hero__card" aria-hidden="true"></div>
+      </div>
+      <div class="reel">
+        <video class="reel__video" muted loop playsinline preload="auto" autoplay poster="assets/media/reel/poster.jpg" aria-label="쇼릴 영상: 데모 사이트, 진행보드, 디자인 체계 작업 모음">
+          <source src="assets/media/reel/reel-720.mp4" type="video/mp4">
+        </video>
+        <div class="reel__shade" aria-hidden="true"></div>
+      </div>
+      <button class="reel__play" type="button" data-magnetic aria-label="쇼릴 크게 보기">
+        <span class="reel__play-dot" aria-hidden="true"></span>
+        <span class="mono">Play reel</span>
+        <span class="mono reel__len">00:30</span>
+      </button>
+    </div>
   </section>
-  <section class="sec" id="fit">
-    <div class="head"><span class="pill"><i class="ph ph-list-checks" aria-hidden="true"></i>공고 담당 업무 5개</span><h2>직무 연결</h2><p class="lead">공고의 담당 업무마다 가장 가까운 작업을 연결하였습니다. 토목 설계와 BIM 실무에서 익힌 도면 이해 역량은 모든 항목의 바탕이 됩니다.</p></div>
-    <div class="fits"><div class="fit rv"><span class="ic" aria-hidden="true"><i class="ph ph-blueprint"></i></span><h3>설계 도면·기술 문서의 검수 및 구조화</h3><ul><li><a href="#p01"><i class="ph ph-magnifying-glass" aria-hidden="true"></i>시장 조사<i class="ph ph-arrow-down-right go" aria-hidden="true"></i></a></li><li><a href="#p05"><i class="ph ph-swatches" aria-hidden="true"></i>디자인 체계<i class="ph ph-arrow-down-right go" aria-hidden="true"></i></a></li></ul></div><div class="fit rv"><span class="ic" aria-hidden="true"><i class="ph ph-check-square-offset"></i></span><h3>AI 분석 결과의 공학적 검증 및 개선 제안</h3><ul><li><a href="#p02"><i class="ph ph-ruler" aria-hidden="true"></i>레퍼런스 실측<i class="ph ph-arrow-down-right go" aria-hidden="true"></i></a></li><li><a href="#p06"><i class="ph ph-check-circle" aria-hidden="true"></i>자동 검수<i class="ph ph-arrow-down-right go" aria-hidden="true"></i></a></li></ul></div><div class="fit rv"><span class="ic" aria-hidden="true"><i class="ph ph-gear-six"></i></span><h3>바이브 코딩을 활용한 내부 업무 자동화 도구 제작</h3><ul><li><a href="#p07"><i class="ph ph-files" aria-hidden="true"></i>판매 자료 · 문서<i class="ph ph-arrow-down-right go" aria-hidden="true"></i></a></li><li><a href="#p10"><i class="ph ph-stack" aria-hidden="true"></i>토큰 · 인수인계<i class="ph ph-arrow-down-right go" aria-hidden="true"></i></a></li></ul></div><div class="fit rv"><span class="ic" aria-hidden="true"><i class="ph ph-scales"></i></span><h3>건축법규·시방서·구조 기준 등 규정 데이터셋 구축</h3><ul><li><a href="#p04"><i class="ph ph-device-mobile" aria-hidden="true"></i>법정 고지 · 모바일<i class="ph ph-arrow-down-right go" aria-hidden="true"></i></a></li><li><a href="#p05"><i class="ph ph-swatches" aria-hidden="true"></i>디자인 체계<i class="ph ph-arrow-down-right go" aria-hidden="true"></i></a></li></ul></div><div class="fit rv"><span class="ic" aria-hidden="true"><i class="ph ph-handshake"></i></span><h3>고객사 PoC 프로젝트 참여</h3><ul><li><a href="#p03"><i class="ph ph-browsers" aria-hidden="true"></i>데모 사이트 32곳<i class="ph ph-arrow-down-right go" aria-hidden="true"></i></a></li><li><a href="#p08"><i class="ph ph-chart-bar" aria-hidden="true"></i>ERP 대시보드<i class="ph ph-arrow-down-right go" aria-hidden="true"></i></a></li></ul></div></div>
+
+  <!-- 소개 문장 -->
+  <section class="statement" aria-label="소개">
+    <p class="statement__text" data-fill>토목 설계 자동화 프로그램의 개발 기획을 수행하며 문서로 정의한 사양과 실제 구현 사이의 간극을 체감하였습니다. 이후 Claude Code를 활용하여 시장 조사부터 화면 제작, 검수 자동화, 납품 공정까지 단독으로 구축하고 있으며, 문제를 정의한 사람이 직접 구현하고 검증할 때 결과물의 완성도가 높아진다고 판단합니다.</p>
   </section>
-  <section class="sec" id="web">
-    <div class="head"><h2>홈페이지 제작</h2></div>
-    <div class="bento"><article class="card rv split" id="p01" style="--s:12"><div class="txt"><span class="ic" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span><h3>홈페이지 제작 시장 조사</h3><p class="desc">홈페이지 제작 외주를 준비하며 크몽 해당 카테고리의 서비스 3,219개를 수집하고 상세 설명 299개를 분석하였습니다. 가격 분포와 문장 12,117개의 길이·표현 빈도를 수치로 정리하여 서비스 기획의 근거로 활용하였습니다.</p><dl class="meta"><div><dt>수집</dt><dd>서비스 3,219개</dd></div><div><dt>분석</dt><dd>상세 설명 299개</dd></div><div><dt>계측</dt><dd>문장 12,117개</dd></div></dl></div><div class="vis"><div class="fig l-stack"><figure class="shot"><img src="img/board.jpg" width="1440" height="900" alt="크몽 상세페이지 분석 보드 첫 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/board-2.jpg" width="1440" height="900" alt="분석 보드의 개인·사업자 비교 표" loading="lazy" decoding="async"></figure></div></div></article><article class="card rv " id="p02" style="--s:5"><div class="vis"><div class="fig l-quad"><figure class="shot"><img src="img/cmp-dental-bareunsup.jpg" width="609" height="1500" alt="치과 데모 사이트 전체 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/cmp-mfg-daon.jpg" width="764" height="1500" alt="제조사 데모 사이트 전체 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/cmp-law-jeongdo.jpg" width="726" height="1500" alt="법무법인 데모 사이트 전체 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/cmp-care-hansol.jpg" width="724" height="1500" alt="요양원 데모 사이트 전체 화면" loading="lazy" decoding="async"></figure></div></div><div class="txt"><span class="ic" aria-hidden="true"><i class="ph ph-ruler"></i></span><h3>레퍼런스 실측 기반 화면 설계</h3><p class="desc">업종별 실존 사이트를 Playwright로 열어 섹션 순서·글자 크기·여백·버튼 모양을 수치로 측정하였습니다. 이미지와 문구는 가져오지 않고 측정값만 옮겨, 업종 관습과 접근성에 맞게 화면을 다시 구성하였습니다.</p><dl class="meta"><div><dt>측정 도구</dt><dd>Playwright</dd></div><div><dt>측정 항목</dt><dd>타이포 · 여백 · 버튼 · 호버</dd></div><div><dt>대상</dt><dd>GDWEB 선정작 중심 16곳</dd></div></dl></div></article><article class="card rv " id="p05" style="--s:7"><div class="vis"><div class="fig l-bento3"><figure class="shot"><img src="img/tpl-layouts.jpg" width="1440" height="900" alt="레이아웃 55종 보드" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/tpl-colors.jpg" width="1440" height="900" alt="색 스킴 32종 보드" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/tpl-ui.jpg" width="1440" height="900" alt="UI 킷 실측 근거 보드" loading="lazy" decoding="async"></figure></div></div><div class="txt"><span class="ic" aria-hidden="true"><i class="ph ph-swatches"></i></span><h3>디자인 체계 및 조합 도구 구축</h3><p class="desc">레이아웃 55종, 템플릿 65종, 색 스킴 32종, 이미지팩 30종, UI 킷 14종을 데이터로 정리하였습니다. 업종과 톤을 고르면 조합 결과를 주문서 파일로 저장하는 스튜디오 화면을 함께 제작하였습니다.</p><dl class="meta"><div><dt>데이터</dt><dd>JSON 파일 13종</dd></div><div><dt>업종 처방</dt><dd>52개 업종</dd></div><div><dt>산출</dt><dd>주문서 → 사이트 제작</dd></div></dl></div></article><article class="card rv " id="p03" style="--s:12"><div class="vis"><div class="fig l-grid6"><figure class="shot"><img src="img/d-mfg-daon.jpg" width="1440" height="900" alt="식품 포장재 제조사 데모 사이트 메인" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/d-tax-hanseom.jpg" width="1440" height="900" alt="세무회계 사무소 데모 사이트 메인" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/d-derm-yeoul.jpg" width="1440" height="900" alt="피부과 데모 사이트 메인" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/d-logi-baekdu.jpg" width="1440" height="900" alt="물류센터 데모 사이트 메인" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/d-it-narae.jpg" width="1440" height="900" alt="IT 솔루션 기업 데모 사이트 메인" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/d-cafe-ondo.jpg" width="1440" height="900" alt="로스터리 카페 데모 사이트 메인" loading="lazy" decoding="async"></figure></div></div><div class="txt"><span class="ic" aria-hidden="true"><i class="ph ph-browsers"></i></span><h3>업종별 데모 사이트 제작 및 배포</h3><p class="desc">의료·법률·세무·제조·물류·IT 등 업종별 홈페이지 32곳을 제작하여 GitHub Pages에 배포하였습니다. 사이트마다 메인과 소개·안내·오시는 길 등 하위 페이지를 갖추고, 공지사항 게시판까지 구성하였습니다.</p><dl class="meta"><div><dt>규모</dt><dd>32곳 · 263페이지</dd></div><div><dt>배포</dt><dd>GitHub Pages</dd></div><div><dt>주소</dt><dd>cmong-demos</dd></div></dl><p class="cap">모든 사이트는 포트폴리오용 가상 업체이며, 각 사이트 하단에 실제 영업 업체가 아님을 표기하였습니다.</p></div></article><article class="card rv" id="p04" style="--s:12"><div class="fig l-phones"><figure class="shot"><img src="img/m-dental-bareunsup.jpg" width="720" height="1558" alt="치과 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/m-kids-badasol.jpg" width="720" height="1558" alt="어린이집 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/m-korm-cheongmyeong.jpg" width="720" height="1558" alt="한의원 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/m-law-jeongdo.jpg" width="720" height="1558" alt="법무법인 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/m-pilates-coreline.jpg" width="720" height="1558" alt="필라테스 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/m-stay-nobaek.jpg" width="720" height="1558" alt="펜션 사이트 휴대폰 화면" loading="lazy" decoding="async"></figure></div><div class="duo"><div class="fig l-law"><figure class="shot"><img src="img/gal-07.jpg" width="978" height="733" alt="업종별 법정 고지 정리 표" loading="lazy" decoding="async"></figure></div><div class="txt"><span class="ic" aria-hidden="true"><i class="ph ph-device-mobile"></i></span><h3>업종별 법정 고지 및 모바일 대응</h3><p class="desc">의료법·수의사법 등 업종별 광고 규정을 사이트마다 반영하여 후기·전후 사진·효과 보장 표현을 제외하였습니다. 모든 사이트에 오시는 길 메뉴와 휴대폰 하단 고정 바를 갖추어 국내 방문자의 이용 방식에 맞추었습니다.</p><dl class="meta"><div><dt>반영 법령</dt><dd>의료법 · 수의사법 외</dd></div><div><dt>모바일</dt><dd>하단 고정 바</dd></div><div><dt>메뉴</dt><dd>오시는 길 1차 메뉴</dd></div></dl></div></div></article><article class="card rv " id="p06" style="--s:6"><div class="vis"><div class="fig l-one"><figure class="shot"><img src="img/new-list.jpg" width="1440" height="900" alt="신규 제작 사이트 모음 화면" loading="lazy" decoding="async"></figure></div><table class="result rv"><thead><tr><th scope="col">검사 항목</th><th scope="col">대상</th><th scope="col" class="v">결과</th></tr></thead><tbody><tr><td>깨진 내부 링크</td><td>263페이지</td><td class="v">0건</td></tr><tr><td>가로 넘침 · 콘솔 오류</td><td>16곳 × 4쪽 × 2폭 = 128화면</td><td class="v">0건</td></tr><tr><td>본문 숨김 회귀 검사</td><td>http · 파일 직접 열기 두 경로</td><td class="v">통과</td></tr><tr><td>검사기 검출 확인</td><td>오류를 일부러 넣은 사이트</td><td class="v">검출</td></tr></tbody></table></div><div class="txt"><span class="ic" aria-hidden="true"><i class="ph ph-check-circle"></i></span><h3>자동 검수 도구 및 회귀 검사</h3><p class="desc">263개 페이지의 깨진 링크와 금지 표현을 자동으로 검사하고, 신규 16곳의 128개 화면에서 가로 넘침을 확인하였습니다. 본문이 사라지는 오류를 계기로 실제 열람 조건을 재현하는 회귀 검사를 추가하였습니다.</p><dl class="meta"><div><dt>링크 검사</dt><dd>263페이지 · 0건</dd></div><div><dt>화면 검사</dt><dd>128화면 · 0건</dd></div><div><dt>회귀 검사</dt><dd>http · 파일 두 경로</dd></div></dl></div></article><article class="card rv " id="p07" style="--s:6"><div class="vis"><div class="fig l-quad4"><figure class="shot"><img src="img/gal-01.jpg" width="978" height="733" alt="크몽 갤러리 표지" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/gal-02.jpg" width="978" height="733" alt="크몽 갤러리 제작 가능 업종" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/service-std.jpg" width="1440" height="900" alt="서비스 제공 기준 문서" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/proposal.jpg" width="1440" height="900" alt="제안서 템플릿 문서" loading="lazy" decoding="async"></figure></div></div><div class="txt"><span class="ic" aria-hidden="true"><i class="ph ph-files"></i></span><h3>판매 자료 및 서비스 기준 문서</h3><p class="desc">크몽 등록용 갤러리 9장과 포트폴리오 17건을 제작하여 브라우저 자동화로 등록하였습니다. 도메인·호스팅·견적 산출 방식을 서비스 제공 기준으로 정리하고, 제안서 템플릿을 문서로 마련하였습니다.</p><dl class="meta"><div><dt>산출물</dt><dd>갤러리 9장 · 포트폴리오 17건</dd></div><div><dt>등록 방식</dt><dd>브라우저 자동화</dd></div><div><dt>문서</dt><dd>서비스 기준 · 제안서 템플릿</dd></div></dl></div></article></div>
+
+  <!-- 수치 -->
+  <section class="numbers" aria-label="작업 수치">
+    <div class="num"><p class="num__n" data-count="32">32</p><p class="num__l">제작한 데모 사이트</p></div>
+    <div class="num"><p class="num__n" data-count="263">263</p><p class="num__l">배포한 페이지</p></div>
+    <div class="num"><p class="num__n" data-count="3219">3,219</p><p class="num__l">분석한 시장 서비스</p></div>
+    <div class="num"><p class="num__n" data-count="12">12</p><p class="num__l">진행보드 공정 단계</p></div>
+    <div class="num"><p class="num__n" data-count="112">112</p><p class="num__l">통과한 자동 테스트</p></div>
   </section>
-  <section class="sec" id="erp">
-    <div class="head"><h2>사내 웹 ERP</h2></div>
-    <div class="bento"><article class="card rv split" id="p08" style="--s:12"><div class="txt"><span class="ic" aria-hidden="true"><i class="ph ph-chart-bar"></i></span><h3>ERP 대시보드 화면 설계</h3><p class="desc">구매·재무·인사 결재 워크플로우를 한 화면에서 관리하는 사내 웹 ERP의 대시보드를 설계하였습니다. 실행 건수와 월별 처리량, 부서별 진행 상태를 KPI 카드·차트·표로 구성하였습니다.</p><dl class="meta"><div><dt>기간</dt><dd>2026.09</dd></div><div><dt>도구</dt><dd>Claude Code · HTML · CSS</dd></div><div><dt>화면</dt><dd>대시보드 · 로그인 · 디자인 보드</dd></div></dl><p class="cap">화면의 인명·수치는 화면 설계를 위한 예시 데이터입니다.</p></div><div class="vis"><div class="fig l-one"><figure class="shot"><img src="img/erp-dash.jpg" width="1440" height="900" alt="ERP 대시보드. 아이콘 레일과 사이드바, 실행 KPI, 월별 처리량 차트, 워크플로우 표" loading="lazy" decoding="async"></figure></div></div></article><article class="card rv " id="p09" style="--s:6"><div class="vis"><div class="fig l-stack"><figure class="shot"><img src="img/erp-login.jpg" width="1440" height="900" alt="ERP 로그인 화면" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/board-erp-2.jpg" width="1440" height="900" alt="디자인 보드의 컬러 팔레트" loading="lazy" decoding="async"></figure></div></div><div class="txt"><span class="ic" aria-hidden="true"><i class="ph ph-lock-key"></i></span><h3>ERP 로그인 화면 및 색 체계</h3><p class="desc">사번·회사 이메일 로그인과 사내 SSO·인증서 로그인을 갖춘 로그인 화면을 제작하였습니다. 레퍼런스 이미지의 색을 픽셀 단위로 샘플링하여 세 가지 색 계열과 유리 질감 규칙으로 정리하였습니다.</p><dl class="meta"><div><dt>로그인 방식</dt><dd>사번 · 이메일 · SSO · 인증서</dd></div><div><dt>색 체계</dt><dd>3개 계열 × 8단계</dd></div><div><dt>상태 색</dt><dd>진행 · 대기 · 보류</dd></div></dl></div></article><article class="card rv " id="p10" style="--s:6"><div class="vis"><div class="fig l-two"><figure class="shot"><img src="img/board-erp-5.jpg" width="1440" height="900" alt="디자인 보드의 컴포넌트 스펙" loading="lazy" decoding="async"></figure><figure class="shot"><img src="img/board-erp-6.jpg" width="1440" height="900" alt="디자인 보드의 토큰 표와 적용 매핑" loading="lazy" decoding="async"></figure></div></div><div class="txt"><span class="ic" aria-hidden="true"><i class="ph ph-stack"></i></span><h3>디자인 토큰 문서화 및 인수인계</h3><p class="desc">색·표면·차트·타이포를 디자인 토큰으로 정리하고, 새 화면을 같은 규칙으로 만드는 적용 기준을 문서화하였습니다. 폰트와 이미지를 내장한 단일 HTML 빌드와 인수인계 파일 생성 스크립트를 작성하였습니다.</p><dl class="meta"><div><dt>문서</dt><dd>토큰 표 · 컴포넌트 스펙 · 원칙</dd></div><div><dt>빌드</dt><dd>Python 단일 HTML 생성</dd></div><div><dt>인수인계</dt><dd>소스 전체 내장 파일</dd></div></dl></div></article></div>
+
+  <!-- 업종 흐름 -->
+  <section class="marquee" aria-label="데모 사이트 업종">
+    <div class="marquee__row"><div class="marquee__track"><span>치과</span><i aria-hidden="true">/</i><span>피부과</span><i aria-hidden="true">/</i><span>한의원</span><i aria-hidden="true">/</i><span>동물병원</span><i aria-hidden="true">/</i><span>로펌</span><i aria-hidden="true">/</i><span>노무사사무소</span><i aria-hidden="true">/</i><span>세무회계</span><i aria-hidden="true">/</i><span>학원</span><i aria-hidden="true">/</i><span>어린이집</span><i aria-hidden="true">/</i><span>카페</span><i aria-hidden="true">/</i><span>베이커리</span><i aria-hidden="true">/</i><span>한식당</span><i aria-hidden="true">/</i><span>꽃집</span><i aria-hidden="true">/</i><span>헬스장</span><i aria-hidden="true">/</i><span>필라테스</span><i aria-hidden="true">/</i><span>네일숍</span><i aria-hidden="true">/</i><span>펜션</span><i aria-hidden="true">/</i><span>사진관</span><i aria-hidden="true">/</i><span>건축사사무소</span><i aria-hidden="true">/</i><span>부동산중개</span><i aria-hidden="true">/</i><span>자동차정비</span><i aria-hidden="true">/</i><span>이사청소</span><i aria-hidden="true">/</i><span>물류</span><i aria-hidden="true">/</i><span>제조</span><i aria-hidden="true">/</i><span>유통</span><i aria-hidden="true">/</i><span>IT솔루션</span><i aria-hidden="true">/</i><span>요양원</span><i aria-hidden="true">/</i><span>골프연습장</span><i aria-hidden="true">/</i><span>치과</span><i aria-hidden="true">/</i><span>피부과</span><i aria-hidden="true">/</i><span>한의원</span><i aria-hidden="true">/</i><span>동물병원</span><i aria-hidden="true">/</i><span>로펌</span><i aria-hidden="true">/</i><span>노무사사무소</span><i aria-hidden="true">/</i><span>세무회계</span><i aria-hidden="true">/</i><span>학원</span><i aria-hidden="true">/</i><span>어린이집</span><i aria-hidden="true">/</i><span>카페</span><i aria-hidden="true">/</i><span>베이커리</span><i aria-hidden="true">/</i><span>한식당</span><i aria-hidden="true">/</i><span>꽃집</span><i aria-hidden="true">/</i><span>헬스장</span><i aria-hidden="true">/</i><span>필라테스</span><i aria-hidden="true">/</i><span>네일숍</span><i aria-hidden="true">/</i><span>펜션</span><i aria-hidden="true">/</i><span>사진관</span><i aria-hidden="true">/</i><span>건축사사무소</span><i aria-hidden="true">/</i><span>부동산중개</span><i aria-hidden="true">/</i><span>자동차정비</span><i aria-hidden="true">/</i><span>이사청소</span><i aria-hidden="true">/</i><span>물류</span><i aria-hidden="true">/</i><span>제조</span><i aria-hidden="true">/</i><span>유통</span><i aria-hidden="true">/</i><span>IT솔루션</span><i aria-hidden="true">/</i><span>요양원</span><i aria-hidden="true">/</i><span>골프연습장</span></div></div>
+  </section>
+
+  <!-- 작업 목록 -->
+  <section class="index" id="works" aria-label="작업 목록">
+    <h2 class="index__title split-chars" aria-label="Selected works">Selected works</h2>
+    <ol class="index__list">
+      <li class="index__row" data-thumb="assets/media/sites/dental-bareunsup.jpg">
+        <a href="#w01" class="index__link">
+          <span class="mono index__no">01</span>
+          <span class="index__name">아이뷰 홈페이지 제작 서비스</span>
+          <span class="mono index__tags">Service / Web</span>
+          <span class="mono index__year">2026</span>
+        </a>
+      </li>
+      <li class="index__row" data-thumb="assets/media/studio/studio.jpg">
+        <a href="#w02" class="index__link">
+          <span class="mono index__no">02</span>
+          <span class="index__name">아이뷰 스튜디오 진행보드</span>
+          <span class="mono index__tags">Tool / Automation</span>
+          <span class="mono index__year">2026</span>
+        </a>
+      </li>
+      <li class="index__row" data-thumb="assets/media/reel/poster.jpg">
+        <a href="#w03" class="index__link">
+          <span class="mono index__no">03</span>
+          <span class="index__name">모션 영상 합성</span>
+          <span class="mono index__tags">Motion / Video</span>
+          <span class="mono index__year">2026</span>
+        </a>
+      </li>
+      <li class="index__row" data-thumb="">
+        <a href="#w04" class="index__link">
+          <span class="mono index__no">04</span>
+          <span class="index__name">법인 ERP 시스템 구축</span>
+          <span class="mono index__tags">Freelance / Web</span>
+          <span class="mono index__year">2026</span>
+        </a>
+      </li>
+    </ol>
+    <div class="preview" aria-hidden="true"><div class="preview__inner"></div></div>
+  </section>
+
+  <!-- 01 홈페이지 제작 -->
+  <section class="work" id="w01" aria-labelledby="w01-title">
+    
+  <header class="work__head">
+    <p class="work__no" aria-hidden="true">01</p>
+    <div class="work__title">
+      <p class="mono work__tags">Service / Web</p>
+      <h2 class="h2 split-lines" id="w01-title">아이뷰 홈페이지 제작 서비스</h2>
+    </div>
+    <div class="work__intro">
+      <p class="lead reveal">크몽 홈페이지 제작 시장을 수치로 분석한 뒤 업종별 데모 사이트 32곳, 총 263페이지를 구축하여 GitHub Pages에 배포하였습니다. 레퍼런스 실측, 업종별 광고 규정, 국내 방문자의 모바일 이용 방식을 사이트마다 반영하였습니다.</p>
+      <dl class="meta"><div><dt class="mono">역할</dt><dd>기획, 디자인, 개발, 배포 (1인)</dd></div><div><dt class="mono">기간</dt><dd>2026.09 - 현재</dd></div><div><dt class="mono">도구</dt><dd>Claude Code, HTML, CSS, JavaScript, Python, Playwright</dd></div></dl>
+    </div>
+  </header>
+
+    <div class="rail" aria-label="업종별 데모 사이트 32곳">
+      <div class="rail__head">
+        <p class="rail__big" aria-hidden="true"><span>32</span> sites</p>
+        <a class="rail__link mono" href="https://leesssbb.github.io/cmong-demos/" target="_blank" rel="noopener" data-magnetic>Demo sites ↗</a>
+      </div>
+      <div class="rail__track">
+        <div class="rail__row"><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/nail-nua/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/nail-nua.jpg" alt="누아 네일 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">누아 네일</span><span class="mono site__ind">네일숍</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/pilates-coreline/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/pilates-coreline.jpg" alt="코어라인 필라테스 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">코어라인 필라테스</span><span class="mono site__ind">필라테스</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/corp-hangyeol/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/corp-hangyeol.jpg" alt="한결정밀 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">한결정밀</span><span class="mono site__ind">정밀가공 제조</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/dental-bareunsup/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/dental-bareunsup.jpg" alt="바른숲치과의원 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">바른숲치과의원</span><span class="mono site__ind">치과</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/academy-irum/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/academy-irum.jpg" alt="더이룸수학학원 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">더이룸수학학원</span><span class="mono site__ind">학원</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/academy-jungdap/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/academy-jungdap.jpg" alt="정답길수학과학학원 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">정답길수학과학학원</span><span class="mono site__ind">학원</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/academy-root/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/academy-root.jpg" alt="루트수학학원 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">루트수학학원</span><span class="mono site__ind">학원</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/arch-seonyul/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/arch-seonyul.jpg" alt="건축사사무소 선율재 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">건축사사무소 선율재</span><span class="mono site__ind">건축사사무소</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/auto-hanbit/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/auto-hanbit.jpg" alt="한빛오토케어 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">한빛오토케어</span><span class="mono site__ind">자동차정비</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/bakery-mildeul/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/bakery-mildeul.jpg" alt="밀들제과점 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">밀들제과점</span><span class="mono site__ind">베이커리</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/cafe-ondo/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/cafe-ondo.jpg" alt="온도 커피 로스터스 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">온도 커피 로스터스</span><span class="mono site__ind">카페</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/care-hansol/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/care-hansol.jpg" alt="한솔채노인요양원 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">한솔채노인요양원</span><span class="mono site__ind">요양원</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/clean-sonkil/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/clean-sonkil.jpg" alt="손길하우스케어 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">손길하우스케어</span><span class="mono site__ind">이사청소</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/derm-yeoul/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/derm-yeoul.jpg" alt="여울담피부과의원 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">여울담피부과의원</span><span class="mono site__ind">피부과</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/estate-teoul/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/estate-teoul.jpg" alt="터울공인중개사사무소 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">터울공인중개사사무소</span><span class="mono site__ind">부동산중개</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/flower-pium/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/flower-pium.jpg" alt="피움상회 플라워 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">피움상회 플라워</span><span class="mono site__ind">꽃집</span></figcaption>
+        </figure></div>
+        <div class="rail__row"><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/food-jangdok/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/food-jangdok.jpg" alt="장독뜰 백반 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">장독뜰 백반</span><span class="mono site__ind">한식당</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/golf-pyeongsan/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/golf-pyeongsan.jpg" alt="평산골프 인도어 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">평산골프 인도어</span><span class="mono site__ind">골프연습장</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/gym-gangdo/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/gym-gangdo.jpg" alt="강도짐 24시 피트니스 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">강도짐 24시 피트니스</span><span class="mono site__ind">헬스장</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/it-narae/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/it-narae.jpg" alt="주식회사 나래웍스 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">주식회사 나래웍스</span><span class="mono site__ind">IT솔루션</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/kids-badasol/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/kids-badasol.jpg" alt="국공립 바다솔빛어린이집 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">국공립 바다솔빛어린이집</span><span class="mono site__ind">어린이집</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/korm-cheongmyeong/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/korm-cheongmyeong.jpg" alt="청명재한의원 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">청명재한의원</span><span class="mono site__ind">한의원</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/labor-mareum/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/labor-mareum.jpg" alt="노무법인 마름결 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">노무법인 마름결</span><span class="mono site__ind">노무사사무소</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/law-jeongdo/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/law-jeongdo.jpg" alt="법무법인 정도 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">법무법인 정도</span><span class="mono site__ind">로펌</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/logi-baekdu/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/logi-baekdu.jpg" alt="주식회사 한들로지스 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">주식회사 한들로지스</span><span class="mono site__ind">물류와 운송</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/mfg-daon/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/mfg-daon.jpg" alt="주식회사 다온팩텍 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">주식회사 다온팩텍</span><span class="mono site__ind">중소 제조</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/stay-nobaek/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/stay-nobaek.jpg" alt="노백재 독채펜션 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">노백재 독채펜션</span><span class="mono site__ind">펜션</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/studio-mureup/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/studio-mureup.jpg" alt="무릎사진관 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">무릎사진관</span><span class="mono site__ind">사진스튜디오</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/tax-hanseom/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/tax-hanseom.jpg" alt="세무회계 단섬 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">세무회계 단섬</span><span class="mono site__ind">세무회계사무소</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/tea-yeobaek/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/tea-yeobaek.jpg" alt="여백다실 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">여백다실</span><span class="mono site__ind">카페</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/trade-mujin/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/trade-mujin.jpg" alt="주식회사 무진툴스 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">주식회사 무진툴스</span><span class="mono site__ind">도소매 유통</span></figcaption>
+        </figure><figure class="site">
+          <a href="https://leesssbb.github.io/cmong-demos/demos/vet-doraon/index.html" target="_blank" rel="noopener" class="site__img">
+            <img src="assets/media/sites/vet-doraon.jpg" alt="도란온동물병원 데모 사이트 첫 화면" loading="lazy" width="1200" height="750">
+          </a>
+          <figcaption><span class="site__name">도란온동물병원</span><span class="mono site__ind">동물병원</span></figcaption>
+        </figure></div>
+      </div>
+      <div class="rail__progress" aria-hidden="true"><span></span></div>
+    </div>
+
+    <div class="stack">
+      <article class="card">
+        <div class="card__body">
+          <p class="mono card__k">01.1</p>
+          <h3 class="h3">홈페이지 제작 시장 조사</h3>
+          <p class="body">크몽 해당 카테고리의 서비스 3,219개와 상세 설명 299개를 분석하여 가격 분포와 문장 12,117개의 길이·표현 빈도를 수치로 정리하였으며, 해당 결과를 기획의 근거로 활용하였습니다.</p>
+          <dl class="meta"><div><dt class="mono">분석</dt><dd>서비스 3,219개</dd></div><div><dt class="mono">정독</dt><dd>상세 설명 299개</dd></div><div><dt class="mono">계측</dt><dd>문장 12,117개</dd></div></dl>
+        </div>
+        <div class="card__img"><img src="assets/media/work/board.jpg" alt="크몽 상세페이지 분석 보드 화면" loading="lazy"></div>
+      </article>
+      <article class="card card--tall">
+        <div class="card__body">
+          <p class="mono card__k">01.2</p>
+          <h3 class="h3">레퍼런스 실측 기반 화면 설계</h3>
+          <p class="body">업종별 실존 사이트를 Playwright로 열어 섹션 순서·글자 크기·여백·버튼 모양을 수치로 측정하였습니다. 이미지와 문구는 가져오지 않고 측정값만 옮겨, 업종 관습과 접근성에 맞게 화면을 다시 구성하였습니다.</p>
+          <dl class="meta"><div><dt class="mono">측정 도구</dt><dd>Playwright</dd></div><div><dt class="mono">측정 항목</dt><dd>타이포, 여백, 버튼, 호버</dd></div><div><dt class="mono">대상</dt><dd>GDWEB 선정작 중심 16곳</dd></div></dl>
+        </div>
+        <div class="card__img"><img src="assets/media/work/cmp-dental-bareunsup.jpg" alt="치과 데모 사이트 전체 화면" loading="lazy"></div>
+      </article>
+      <article class="card">
+        <div class="card__body">
+          <p class="mono card__k">01.3</p>
+          <h3 class="h3">업종별 법정 고지 및 모바일 대응</h3>
+          <p class="body">의료법·수의사법 등 업종별 광고 규정을 사이트마다 반영하여 후기·전후 사진·효과 보장 표현을 제외하였습니다. 모든 사이트에 오시는 길 메뉴와 휴대폰 하단 고정 바를 갖추어 국내 방문자의 이용 방식에 맞추었습니다.</p>
+          <dl class="meta"><div><dt class="mono">반영 법령</dt><dd>의료법, 수의사법 외</dd></div><div><dt class="mono">모바일</dt><dd>하단 고정 바</dd></div><div><dt class="mono">메뉴</dt><dd>오시는 길 1차 메뉴</dd></div></dl>
+        </div>
+        <div class="card__img"><img src="assets/media/work/gal-07.jpg" alt="업종별 법정 고지 정리 표" loading="lazy"></div>
+      </article>
+      <article class="card">
+        <div class="card__body">
+          <p class="mono card__k">01.4</p>
+          <h3 class="h3">디자인 체계 및 조합 도구 구축</h3>
+          <p class="body">레이아웃 55종, 템플릿 65종, 색 스킴 32종, 이미지팩 30종, UI 킷 14종을 데이터로 정리하였습니다. 업종과 톤을 고르면 조합 결과를 주문서 파일로 저장하는 스튜디오 화면을 함께 제작하였습니다.</p>
+          <dl class="meta"><div><dt class="mono">데이터</dt><dd>JSON 파일 13종</dd></div><div><dt class="mono">업종 처방</dt><dd>52개 업종</dd></div><div><dt class="mono">산출</dt><dd>주문서에서 사이트 제작</dd></div></dl>
+        </div>
+        <div class="card__img"><img src="assets/media/work/tpl-layouts.jpg" alt="레이아웃 55종 보드" loading="lazy"></div>
+      </article>
+      <article class="card">
+        <div class="card__body">
+          <p class="mono card__k">01.5</p>
+          <h3 class="h3">판매 자료 및 서비스 기준 문서</h3>
+          <p class="body">크몽 등록용 갤러리 9장과 포트폴리오 17건을 제작하여 브라우저 자동화로 등록하였습니다. 도메인·호스팅·견적 산출 방식을 서비스 제공 기준으로 정리하고, 제안서 템플릿을 문서로 마련하였습니다.</p>
+          <dl class="meta"><div><dt class="mono">산출물</dt><dd>갤러리 9장, 포트폴리오 17건</dd></div><div><dt class="mono">등록 방식</dt><dd>브라우저 자동화</dd></div><div><dt class="mono">문서</dt><dd>서비스 기준, 제안서 템플릿</dd></div></dl>
+        </div>
+        <div class="card__img"><img src="assets/media/work/service-std.jpg" alt="서비스 제공 기준 문서" loading="lazy"></div>
+      </article>
+    </div>
+
+    <div class="qa">
+      <div class="qa__text">
+        <h3 class="h3">자동 검수 도구 및 회귀 검사</h3>
+        <p class="body reveal">263개 페이지의 깨진 링크와 금지 표현을 자동으로 검사하고, 신규 16곳의 128개 화면에서 가로 넘침을 확인하였습니다. 본문이 사라지는 오류를 계기로 실제 열람 조건을 재현하는 회귀 검사를 추가하였습니다.</p>
+      </div>
+      <table class="qa__table">
+        <thead><tr><th class="mono">검사 항목</th><th class="mono">범위</th><th class="mono">결과</th></tr></thead>
+        <tbody><tr><td>깨진 내부 링크</td><td>263페이지</td><td class="qa__res">0건</td></tr><tr><td>가로 넘침 · 콘솔 오류</td><td>16곳 × 4쪽 × 2폭 = 128화면</td><td class="qa__res">0건</td></tr><tr><td>본문 숨김 회귀 검사</td><td>http · 파일 직접 열기 두 경로</td><td class="qa__res">통과</td></tr><tr><td>검사기 검출 확인</td><td>오류를 일부러 넣은 사이트</td><td class="qa__res">검출</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="phones" aria-label="모바일 화면">
+      <div class="phone"><img src="assets/media/sites/nail-nua-m.jpg" alt="누아 네일 모바일 화면" loading="lazy"></div>
+      <div class="phone"><img src="assets/media/sites/kids-badasol-m.jpg" alt="국공립 바다솔빛어린이집 모바일 화면" loading="lazy"></div>
+      <div class="phone"><img src="assets/media/sites/korm-cheongmyeong-m.jpg" alt="청명재한의원 모바일 화면" loading="lazy"></div>
+      <div class="phone"><img src="assets/media/sites/law-jeongdo-m.jpg" alt="법무법인 정도 모바일 화면" loading="lazy"></div>
+      <div class="phone"><img src="assets/media/sites/pilates-coreline-m.jpg" alt="코어라인 필라테스 모바일 화면" loading="lazy"></div>
+      <div class="phone"><img src="assets/media/sites/stay-nobaek-m.jpg" alt="노백재 독채펜션 모바일 화면" loading="lazy"></div>
+      <div class="phone"><img src="assets/media/sites/vet-doraon-m.jpg" alt="도란온동물병원 모바일 화면" loading="lazy"></div>
+    </div>
+    <p class="caption mono-kr">모든 사이트는 포트폴리오용 가상 업체이며, 각 사이트 하단에 실제로 영업하지 않는 곳임을 표기하였습니다.</p>
+  </section>
+
+  <!-- 02 진행보드 -->
+  <section class="work" id="w02" aria-labelledby="w02-title">
+    
+  <header class="work__head">
+    <p class="work__no" aria-hidden="true">02</p>
+    <div class="work__title">
+      <p class="mono work__tags">Tool / Automation</p>
+      <h2 class="h2 split-lines" id="w02-title">아이뷰 스튜디오 진행보드</h2>
+    </div>
+    <div class="work__intro">
+      <p class="lead reveal">크몽 주문의 요청서를 붙여넣으면 상호·업종·패키지·부족한 자료를 정리하고, 시안부터 납품까지 12단계 공정을 한 화면에서 관리하는 작업 도구를 구축하였습니다. 업무 부담이 큰 작업은 요청 큐로 Claude 세션에 전달하고, 자동 검사를 통과해야 다음 단계가 열리도록 설계하였습니다.</p>
+      <dl class="meta"><div><dt class="mono">역할</dt><dd>기획, 개발 (1인)</dd></div><div><dt class="mono">기간</dt><dd>2026.09 - 현재</dd></div><div><dt class="mono">구성</dt><dd>Python 서버, 요청 큐, 자동 검사 7종, 테스트 112건</dd></div></dl>
+    </div>
+  </header>
+
+    <div class="screen">
+      <div class="screen__frame">
+        <img class="screen__bw" src="assets/media/studio/studio.jpg" alt="" aria-hidden="true">
+        <img class="screen__color" src="assets/media/studio/studio.jpg" alt="아이뷰 스튜디오 진행보드 화면: 주문 목록, 12단계 공정 표시, 미리보기, Claude 작업 패널">
+      </div>
+    </div>
+
+    <div class="flow" aria-label="12단계 공정">
+      <svg class="flow__svg" viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true"><path class="flow__path" d=""/></svg>
+      <ol class="flow__steps">
+        <li class="step step--in"><span class="mono step__i">01</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">요청서 읽기</span><span class="mono step__k">입력</span></li>
+        <li class="step step--pick"><span class="mono step__i">02</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">방향 잡기</span><span class="mono step__k">선택</span></li>
+        <li class="step step--ai"><span class="mono step__i">03</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">레퍼런스 찾기</span><span class="mono step__k">Claude</span></li>
+        <li class="step step--pick"><span class="mono step__i">04</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">레퍼런스 고르기</span><span class="mono step__k">선택</span></li>
+        <li class="step step--ai"><span class="mono step__i">05</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">시안 만들기</span><span class="mono step__k">Claude</span></li>
+        <li class="step step--gate"><span class="mono step__i">06</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">자동 검사</span><span class="mono step__k">자동 관문</span></li>
+        <li class="step step--hand"><span class="mono step__i">07</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">시안 보내기</span><span class="mono step__k">수동</span></li>
+        <li class="step step--ai"><span class="mono step__i">08</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">수정 반영</span><span class="mono step__k">Claude</span></li>
+        <li class="step step--ai"><span class="mono step__i">09</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">하위페이지 완성</span><span class="mono step__k">Claude</span></li>
+        <li class="step step--gate"><span class="mono step__i">10</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">최종 검사</span><span class="mono step__k">자동 관문</span></li>
+        <li class="step step--ai"><span class="mono step__i">11</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">납품 준비</span><span class="mono step__k">Claude</span></li>
+        <li class="step step--hand"><span class="mono step__i">12</span><span class="step__dot" aria-hidden="true"></span><span class="step__n">마무리</span><span class="mono step__k">수동</span></li>
+      </ol>
+      <ul class="flow__legend mono" aria-label="단계 종류">
+        <li><span class="step__dot dot--in"></span>입력</li><li><span class="step__dot dot--pick"></span>선택</li><li><span class="step__dot dot--ai"></span>Claude</li><li><span class="step__dot dot--gate"></span>자동 관문</li><li><span class="step__dot dot--hand"></span>수동</li>
+      </ul>
+    </div>
+
+    <div class="bento">
+      <figure class="tile tile--0">
+        <div class="tile__media"><video class="tile__video" muted loop playsinline preload="none" data-src="assets/media/clips/studio-intake.mp4" ></video></div>
+        <figcaption><span class="tile__t">요청서 자동 정리</span><span class="tile__d">크몽 요청사항을 붙여넣으면 상호, 업종, 패키지, 부족한 자료를 읽어 작업을 생성합니다.</span></figcaption>
+      </figure>
+      <figure class="tile tile--1">
+        <div class="tile__media"><video class="tile__video" muted loop playsinline preload="none" data-src="assets/media/clips/studio-annotate.mp4" ></video></div>
+        <figcaption><span class="tile__t">미리보기 영역 지정</span><span class="tile__d">고칠 곳을 미리보기에서 드래그하고 메모를 남기면 위치, 요소, 캡처를 묶어 Claude 세션에 전달합니다.</span></figcaption>
+      </figure>
+      <figure class="tile tile--2">
+        <div class="tile__media"><video class="tile__video" muted loop playsinline preload="none" data-src="assets/media/clips/studio-flow.mp4" ></video></div>
+        <figcaption><span class="tile__t">공정 단계 관리</span><span class="tile__d">공정을 초안, 완성본, 마무리 세 단계로 나누고 지금 할 일을 버튼 하나로 이어 줍니다.</span></figcaption>
+      </figure>
+      <figure class="tile tile--3">
+        <div class="tile__media"><video class="tile__video" muted loop playsinline preload="none" data-src="assets/media/clips/studio-compare.mp4" ></video></div>
+        <figcaption><span class="tile__t">전후 비교와 되돌리기</span><span class="tile__d">작업 전후 화면을 겹쳐 비교하고, 되돌리기 한 번으로 이전 상태로 복원합니다.</span></figcaption>
+      </figure>
+      <figure class="tile tile--4">
+        <div class="tile__media"><video class="tile__video" muted loop playsinline preload="none" data-src="assets/media/clips/studio-devices.mp4" ></video></div>
+        <figcaption><span class="tile__t">기기별 화면과 자동 검사</span><span class="tile__d">PC, 태블릿, 모바일 화면을 전환하여 확인하고 자동 검사로 납품 기준을 점검합니다.</span></figcaption>
+      </figure>
+      <figure class="tile tile--5">
+        <div class="tile__media"><video class="tile__video" muted loop playsinline preload="none" data-src="assets/media/clips/studio-palette.mp4" ></video></div>
+        <figcaption><span class="tile__t">명령 팔레트</span><span class="tile__d">Ctrl K로 주문과 단계, 사이트를 초성만으로 찾아 이동합니다.</span></figcaption>
+      </figure>
+    </div>
+    <p class="caption mono-kr">화면의 주문은 기능 시험을 위한 연습 데이터입니다.</p>
+  </section>
+
+  <!-- 03 모션 -->
+  <section class="work" id="w03" aria-labelledby="w03-title">
+    
+  <header class="work__head">
+    <p class="work__no" aria-hidden="true">03</p>
+    <div class="work__title">
+      <p class="mono work__tags">Motion / Video</p>
+      <h2 class="h2 split-lines" id="w03-title">모션 영상 합성</h2>
+    </div>
+    <div class="work__intro">
+      <p class="lead reveal">화면을 실시간으로 녹화하지 않고, 시간 값 하나로 모든 장면을 그리는 합성 HTML을 프레임 단위로 캡처하여 mp4로 묶는 방식을 구축하였습니다. 모션 블러, 한국어 음성 내레이션, 단어 단위 자막까지 동일한 방식으로 구현하였으며, 포트폴리오 첫 화면의 쇼릴도 해당 도구로 제작하였습니다.</p>
+      <dl class="meta"><div><dt class="mono">방식</dt><dd>합성 HTML, 프레임 단위 캡처, ffmpeg</dd></div><div><dt class="mono">기능</dt><dd>모션 블러, 음성 내레이션, 단어 단위 자막</dd></div></dl>
+    </div>
+  </header>
+    <div class="films">
+      <figure class="film" style="--r:4 / 3">
+        <div class="film__media"><video class="film__video" muted loop playsinline preload="none" data-src="assets/media/clips/kmong-reel.mp4" ></video></div>
+        <figcaption><span class="film__t">크몽 갤러리 쇼릴</span><span class="mono film__s">1304 × 978 · 16초</span></figcaption>
+      </figure>
+      <figure class="film" style="--r:9 / 16">
+        <div class="film__media"><video class="film__video" muted loop playsinline preload="none" data-src="assets/media/clips/open-guide.mp4" ></video></div>
+        <figcaption><span class="film__t">홈페이지 오픈 안내 영상</span><span class="mono film__s">1080 × 1920 · 34초</span></figcaption>
+      </figure>
+      <figure class="film" style="--r:16 / 9">
+        <div class="film__media"><video class="film__video" muted loop playsinline preload="none" data-src="assets/media/clips/studio-flow.mp4" ></video></div>
+        <figcaption><span class="film__t">스튜디오 기능 영상</span><span class="mono film__s">1920 × 1080 · 1분 43초</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 04 ERP -->
+  <section class="work work--text" id="w04" aria-labelledby="w04-title">
+    
+  <header class="work__head">
+    <p class="work__no" aria-hidden="true">04</p>
+    <div class="work__title">
+      <p class="mono work__tags">Freelance / Web</p>
+      <h2 class="h2 split-lines" id="w04-title">법인 ERP 시스템 구축</h2>
+    </div>
+    <div class="work__intro">
+      <p class="lead reveal">의류 매장 4개 지점을 운영하는 소규모 법인의 ERP 시스템을 프리랜서 용역으로 단독 구축하였습니다. 매장 담당자의 업무를 청취하여 요구사항을 화면 단위로 정의하고 문서로 합의하였으며, 4개 지점이 동일한 데이터를 공유하는 웹 기반 구조로 구현하여 납품하였습니다.</p>
+      <dl class="meta"><div><dt class="mono">형태</dt><dd>프리랜서 용역, 단독 수행</dd></div><div><dt class="mono">기간</dt><dd>2026</dd></div><div><dt class="mono">개발</dt><dd>LLM 활용 설계, 코드 작성, 오류 해결</dd></div></dl>
+    </div>
+  </header>
+    <ul class="features">
+      <li><span class="mono">01</span><span class="features__t">고객 대여 정보 관리</span></li>
+      <li><span class="mono">02</span><span class="features__t">대여·반납 일정 알림 발송</span></li>
+      <li><span class="mono">03</span><span class="features__t">직원 출퇴근 기록</span></li>
+      <li><span class="mono">04</span><span class="features__t">지점별 재고 관리</span></li>
+      <li><span class="mono">05</span><span class="features__t">운영 중 수정본 즉시 배포</span></li>
+    </ul>
+  </section>
+
+  <!-- 이력 (밝은 장) -->
+  <section class="bg" id="background" aria-labelledby="bg-title">
+    <div class="bg__wipe" aria-hidden="true"></div>
+    <div class="bg__inner">
+      <h2 class="bg__title split-chars" id="bg-title" aria-label="Background">Background</h2>
+      <ol class="timeline">
+        <li class="tl"><span class="mono tl__when">2025.01 - 2025.12</span><span class="tl__what">㈜삼안 기술개발센터 연구원</span><span class="tl__note">사내 BIM 자동화 프로그램의 기능 기획(배수공 일부), 고속도로 BIM 설계 프로젝트 수행</span></li>
+        <li class="tl"><span class="mono tl__when">2023.03 - 2025.02</span><span class="tl__what">강릉원주대학교 대학원 토목공학과 공간정보협동과정 석사</span><span class="tl__note">3D 레이저 스캐너 기반 노후교량 유지관리 연구, 포인트 169,780,536개 정합</span></li>
+        <li class="tl"><span class="mono tl__when">2023.11</span><span class="tl__what">한국건설관리학회 정기학술발표대회 우수논문상</span><span class="tl__note">전체 197편 중 선정</span></li>
+        <li class="tl"><span class="mono tl__when">2023.03</span><span class="tl__what">대한토목학회 2023 토목의날 구조물모형경진대회 금상</span><span class="tl__note"></span></li>
+        <li class="tl"><span class="mono tl__when">2022.09</span><span class="tl__what">2022 엔지니어링 경진대회 엔지니어링공제조합 이사장상(장려상)</span><span class="tl__note"></span></li>
+        <li class="tl"><span class="mono tl__when">2022</span><span class="tl__what">토목기사, BIM운용전문가 2급(토목)</span><span class="tl__note">2022.06 · 2022.12 취득</span></li>
+      </ol>
+    </div>
+
+    <footer class="foot" id="contact">
+      <div class="foot__links">
+        <a class="foot__a" href="https://github.com/leesssbb" target="_blank" rel="noopener" data-magnetic><span class="mono">GitHub</span><span>github.com/leesssbb ↗</span></a>
+        <a class="foot__a" href="https://leesssbb.github.io/cmong-demos/" target="_blank" rel="noopener" data-magnetic><span class="mono">Demo sites</span><span>leesssbb.github.io/cmong-demos ↗</span></a>
+        <button class="foot__a foot__top" type="button" data-magnetic><span class="mono">Back to top</span><span>처음으로 ↑</span></button>
+      </div>
+      <p class="foot__word" aria-label="LEE SEUNGBIN"><span class="foot__fit"><span aria-hidden="true">L</span><span aria-hidden="true">E</span><span aria-hidden="true">E</span><span class="sp" aria-hidden="true"> </span><span aria-hidden="true">S</span><span aria-hidden="true">E</span><span aria-hidden="true">U</span><span aria-hidden="true">N</span><span aria-hidden="true">G</span><span aria-hidden="true">B</span><span aria-hidden="true">I</span><span aria-hidden="true">N</span></span></p>
+      <div class="foot__base mono"><span>© 2026 Lee Seungbin</span><span class="mono-kr">모든 화면은 본인이 제작한 결과물을 직접 캡처한 것입니다.</span></div>
+    </footer>
   </section>
 </main>
-<footer class="foot"><p>이승빈 · 2026년 9월 작성 · 모든 화면은 본인이 제작한 결과물을 직접 캡처한 것입니다.</p></footer>
-<dialog id="lb" aria-label="이미지 크게 보기"><button type="button">닫기</button><img alt=""></dialog>
-<script>
-(function(){
-  var root=document.documentElement; root.classList.add('js');
-  var rv=document.querySelectorAll('.rv');
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px'});
-    rv.forEach(function(el){io.observe(el)});
-    setTimeout(function(){rv.forEach(function(el){el.classList.add('in')})},2500);
-  } else rv.forEach(function(el){el.classList.add('in')});
-  var lb=document.getElementById('lb'), li=lb.querySelector('img');
-  document.querySelectorAll('.shot').forEach(function(f){
-    f.tabIndex=0; f.setAttribute('role','button');
-    var open=function(){var im=f.querySelector('img'); li.src=im.src; li.alt=im.alt; lb.showModal();};
-    f.addEventListener('click',open);
-    f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
-  });
-  lb.addEventListener('click',function(e){if(e.target!==li) lb.close();});
-})();
-</script>
+
+<div class="modal" role="dialog" aria-modal="true" aria-label="쇼릴" hidden>
+  <video class="modal__video" controls playsinline preload="none" data-src="assets/media/reel/reel-1080.mp4" poster="assets/media/reel/poster.jpg"></video>
+  <button class="modal__close mono" type="button" data-magnetic>Close</button>
+</div>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/SplitText.min.js"></script>
+<script src="assets/vendor/CustomEase.min.js"></script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="assets/js/site.js"></script>
 </body>
 </html>
