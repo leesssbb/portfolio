@@ -1,5 +1,4 @@
-/* 포트폴리오 원고. 문구 수정은 이 파일에서만 한다.
-   사실 근거: C:\cmong WORKLOG · ops/pipeline.py · video/README.md, 두아즈 tools/content.py, 지원서 원본(학력·경력·수상). */
+/* 포트폴리오 원고. 문구 수정은 이 파일에서만 한다. 사실 근거는 작업 기록과 지원서 원본(학력·경력·수상)이다. */
 window.PF = {
   hero: {
     sub: '토목 설계 실무와 Claude Code 기반 웹 서비스 제작',
