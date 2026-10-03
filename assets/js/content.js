@@ -14,15 +14,15 @@ window.PF = {
     { n: 32, label: '제작한 데모 사이트' },
     { n: 263, label: '배포한 페이지' },
     { n: 3219, label: '분석한 시장 서비스' },
-    { n: 12, label: '진행보드 공정 단계' },
+    { n: 12, label: '자동화 공정 단계' },
     { n: 112, label: '통과한 자동 테스트' },
   ],
 
   works: [
-    { id: 'w01', no: '01', title: '아이뷰 홈페이지 제작 서비스', tags: 'Service / Web', year: '2026', thumb: 'assets/media/sites/dental-bareunsup.jpg' },
-    { id: 'w02', no: '02', title: '아이뷰 스튜디오 진행보드', tags: 'Tool / Automation', year: '2026', thumb: 'assets/media/studio/studio.jpg' },
-    { id: 'w03', no: '03', title: '모션 영상 합성', tags: 'Motion / Video', year: '2026', thumb: 'assets/media/reel/poster.jpg' },
-    { id: 'w04', no: '04', title: '법인 ERP 시스템 구축', tags: 'Freelance / Web', year: '2026', thumb: '' },
+    { id: 'w01', no: '01', title: 'AI 기반 업종별 홈페이지 제작 및 배포', tags: 'Service / Web', year: '2026', thumb: 'assets/media/sites/dental-bareunsup.jpg' },
+    { id: 'w02', no: '02', title: 'AI 기반 홈페이지 제작 자동화 워크프로세스 구축', tags: 'AI / Automation', year: '2026', thumb: 'assets/media/studio/studio.jpg' },
+    { id: 'w03', no: '03', title: 'AI 기반 모션 영상 제작 파이프라인 구축', tags: 'Motion / Video', year: '2026', thumb: 'assets/media/reel/poster.jpg' },
+    { id: 'w04', no: '04', title: 'LLM 활용 법인 ERP 시스템 구축', tags: 'Freelance / Web', year: '2026', thumb: '' },
   ],
 
   w01: {
@@ -47,7 +47,7 @@ window.PF = {
         desc: '의료법·수의사법 등 업종별 광고 규정을 사이트마다 반영하여 후기·전후 사진·효과 보장 표현을 제외하였습니다. 모든 사이트에 오시는 길 메뉴와 휴대폰 하단 고정 바를 갖추어 국내 방문자의 이용 방식에 맞추었습니다.',
         facts: [['반영 법령', '의료법, 수의사법 외'], ['모바일', '하단 고정 바'], ['메뉴', '오시는 길 1차 메뉴']] },
       { title: '디자인 체계 및 조합 도구 구축', img: 'assets/media/work/tpl-layouts.jpg', alt: '레이아웃 55종 보드',
-        desc: '레이아웃 55종, 템플릿 65종, 색 스킴 32종, 이미지팩 30종, UI 킷 14종을 데이터로 정리하였습니다. 업종과 톤을 고르면 조합 결과를 주문서 파일로 저장하는 스튜디오 화면을 함께 제작하였습니다.',
+        desc: '레이아웃 55종, 템플릿 65종, 색 스킴 32종, 이미지팩 30종, UI 킷 14종을 데이터로 정리하였습니다. 업종과 톤을 고르면 결과를 주문서 파일로 저장하는 조합 도구 화면을 함께 제작하였습니다.',
         facts: [['데이터', 'JSON 파일 13종'], ['업종 처방', '52개 업종'], ['산출', '주문서에서 사이트 제작']] },
       { title: '판매 자료 및 서비스 기준 문서', img: 'assets/media/work/service-std.jpg', alt: '서비스 제공 기준 문서',
         desc: '크몽 등록용 갤러리 9장과 포트폴리오 17건을 제작하여 브라우저 자동화로 등록하였습니다. 도메인·호스팅·견적 산출 방식을 서비스 제공 기준으로 정리하고, 제안서 템플릿을 문서로 마련하였습니다.',
@@ -102,7 +102,7 @@ window.PF = {
     videos: [
       { src: 'assets/media/clips/kmong-reel.mp4', ratio: '4 / 3', title: '크몽 갤러리 쇼릴', spec: '1304 × 978 · 16초' },
       { src: 'assets/media/clips/open-guide.mp4', ratio: '9 / 16', title: '홈페이지 오픈 안내 영상', spec: '1080 × 1920 · 34초' },
-      { src: 'assets/media/clips/studio-flow.mp4', ratio: '16 / 9', title: '스튜디오 기능 영상', spec: '1920 × 1080 · 1분 43초' },
+      { src: 'assets/media/clips/studio-flow.mp4', ratio: '16 / 9', title: '자동화 도구 기능 소개 영상', spec: '1920 × 1080 · 1분 43초' },
     ],
   },
 

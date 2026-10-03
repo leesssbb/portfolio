@@ -308,7 +308,7 @@
           scrollTrigger: { trigger: '.phones', start: 'top bottom', end: 'bottom top', scrub: true } });
       });
 
-      // 02 · 진행보드 화면 확대와 색 돌아오기, 12단계 흐름선
+      // 02 · 자동화 도구 화면 확대와 색 돌아오기, 12단계 흐름선
       if (desk) {
         gsap.timeline({ scrollTrigger: { trigger: '.screen', start: 'top top', end: '+=130%', pin: true, scrub: .8 } })
           .fromTo('.screen__frame', { scale: .6 }, { scale: 1, ease: 'none', duration: 1 })
