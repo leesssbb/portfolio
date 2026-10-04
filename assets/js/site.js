@@ -126,6 +126,56 @@
     scenes();
     extras();
     glReel(reel);
+    reelSound();
+  }
+
+  /* ---------- 쇼릴 소리: 브라우저가 허용하면 바로 켜고, 막히면 첫 클릭 · 터치 · 키 입력에서 켠다 ---------- */
+  function reelSound() {
+    const btn = $('.nav__sound'), modal = $('.modal');
+    if (!btn || !video) return;
+    const label = btn.querySelector('.nav__sound-l');
+    let on = false, heroIn = true, pref = null;
+    try { pref = localStorage.getItem('reelSound'); } catch (e) { /* 저장소를 못 쓰면 기본값 */ }
+    const paint = () => {
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-pressed', String(on));
+      btn.setAttribute('aria-label', on ? '쇼릴 배경 음악 끄기' : '쇼릴 배경 음악 켜기');
+      label.textContent = on ? 'Sound on' : 'Sound off';
+    };
+    const set = (want, play, force) => {
+      on = want; video.muted = !want; paint();
+      if (want && play && heroIn && modal.hidden && (!reduce || force) && video.paused) video.play().catch(() => {});
+    };
+    new IntersectionObserver(es => { heroIn = es[0].isIntersecting; }, { threshold: .02 }).observe($('.reel'));
+
+    const EVENTS = ['pointerdown', 'keydown', 'touchend'];
+    const disarm = () => EVENTS.forEach(ev => removeEventListener(ev, unlock, true));
+    const arm = () => EVENTS.forEach(ev => addEventListener(ev, unlock, { capture: true, passive: true }));
+    function unlock(e) {
+      if (e.type === 'keydown' && (e.key === 'Escape' || ['Shift', 'Control', 'Alt', 'Meta'].includes(e.key))) return;
+      const t = e.target.closest ? e.target : document.body;
+      if (t.closest('.nav__sound')) return; // 버튼은 클릭에서 직접 처리한다
+      disarm();
+      set(true, !t.closest('.reel__play, .modal')); // 쇼릴 크게 보기를 누른 경우 첫 화면 영상은 다시 틀지 않는다
+    }
+
+    btn.addEventListener('click', () => {
+      disarm();
+      const want = !on;
+      try { localStorage.setItem('reelSound', want ? 'on' : 'off'); } catch (e) { /* 무시 */ }
+      set(want, true, true);
+    });
+
+    paint();
+    if (pref === 'off' || reduce) return; // 끄기를 고른 방문자 · 움직임 줄이기 환경에서는 자동으로 켜지 않는다
+    const policy = navigator.getAutoplayPolicy ? navigator.getAutoplayPolicy(video) : null;
+    if (policy && policy !== 'allowed') { arm(); return; }
+    video.muted = false;
+    video.play().then(() => { on = true; paint(); }).catch(() => {
+      video.muted = true;
+      if (heroIn && modal.hidden) video.play().catch(() => {});
+      arm();
+    });
   }
 
   /* ---------- 쇼릴 셰이더: 스크롤 속도만큼 렌즈 왜곡과 색 분리 (데스크톱 · 움직임 허용 시) ---------- */
